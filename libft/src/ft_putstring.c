@@ -1,19 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
+/*   ft_putstring.c                                     :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/11/18 19:38:05 by dkocob        #+#    #+#                 */
-/*   Updated: 2021/11/18 19:45:59 by dkocob        ########   odam.nl         */
+/*   Created: 2021/10/21 21:41:13 by dkocob        #+#    #+#                 */
+/*   Updated: 2021/10/29 21:33:55 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./mlx/mlx.h"
+#include "libft.h"
 
-int	main ()
+void	ft_putstring(char *s)
 {
-	
-	return (0);
+	int	i;
+
+	i = 0;
+	if (!s)
+		return ;
+	while (s[i] && s[i] != '\0')
+		i++;
+	write(1, &s[0], i);
+	return ;
 }
