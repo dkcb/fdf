@@ -6,7 +6,7 @@
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/21 19:08:11 by dkocob        #+#    #+#                 */
-/*   Updated: 2021/11/23 18:51:42 by dkocob        ########   odam.nl         */
+/*   Updated: 2021/11/23 19:03:36 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,25 +39,21 @@ typedef struct	s_mouse {
 	int		pr;
 	int		px;
 	int		py;
+	int		dfpx;
+	int		dfpy;
 	int		mrl;
 }				t_mouse;
 
-typedef struct	s_vars {
+typedef struct	s_data {
 	void	*mlx;
 	void	*image;
 	void	*win;
-	t_mouse	m;
-}				t_vars;
-
-typedef struct	s_data {
 	t_p		p;
 	t_img	img;
-	t_vars	vars;
+	t_mouse	m;
 }				t_data;
 
 void	my_mlx_pixel_put(t_img *img, int x, int y, int color);
-int		key_hook(int keycode, t_vars *vars);
-int		close(int keycode, t_vars *vars);
 int		window(void);
 
 # endif

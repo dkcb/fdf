@@ -6,7 +6,7 @@
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/20 17:54:41 by dkocob        #+#    #+#                 */
-/*   Updated: 2021/11/23 18:55:30 by dkocob        ########   odam.nl         */
+/*   Updated: 2021/11/23 19:04:45 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	set_pixel(t_data *d, int x, int y, int c)
 	return (0);
 }
 
-// void	setup_controls(t_vars *vars)
+// void	setup_controls(t_data *vars)
 // {
 // 	mlx_hook(vars->win, 2, 0, key_press, &vars);
 // 	mlx_hook(vars->win, 17, 0, close, &vars);
@@ -50,7 +50,7 @@ int	set_pixel(t_data *d, int x, int y, int c)
 
 
 
-int	close(int keycode, t_vars *vars)
+int	close(int keycode, t_data *vars)
 {
 	printf("ECKEYCODE:%d\n", keycode);
 	if (keycode == 53)
@@ -60,22 +60,25 @@ int	close(int keycode, t_vars *vars)
 	return (0);
 }
 
-int	mouse_move(int x, int y, t_vars *vars)
+int	mouse_move(int x, int y, t_data *vars)
 {
-	printf("x:%d, y:%d\n", x, y);
+	// printf("x:%d, y:%d\n", x, y);
+	vars->m.dfpx = vars->m.px + x;
+	vars->m.dfpy = vars->m.py + y;
+	// printf("x:%d, y:%d\n", x, y);
 	// if (keycode < 0)
 	// 	exit(0);
 	return (0);
 }
 
-// int	set_data_mrelease(int press, int x, int y, t_vars *vars)
+// int	set_data_mrelease(int press, int x, int y, t_data *vars)
 // {
 // 	// vars->mreleased = 1;
 // 	printf("Mreleased\n");
 // 	return (0);
 // }
 
-int	mouse_press(int press, int x, int y, t_vars *vars)
+int	mouse_press(int press, int x, int y, t_data *vars)
 {
 	// vars->mrl = 0;
 	vars->m.pr = 1;
@@ -92,7 +95,7 @@ int	mouse_press(int press, int x, int y, t_vars *vars)
 	return (0);
 }
 
-int	mouse_release(int press, int x, int y, t_vars *vars)
+int	mouse_release(int press, int x, int y, t_data *vars)
 {
 	printf("MRelease:%d, x:%d, y:%d\n", press, x, y);
 	// vars->mrl = 1;
@@ -103,7 +106,7 @@ int	mouse_release(int press, int x, int y, t_vars *vars)
 	return (0);
 }
 
-int	hooks(t_vars *vars)
+int	hooks(t_data *vars)
 {
 	mlx_hook(vars->win, 2, 1<<0, close, &vars); //key press
 	mlx_hook(vars->win, 17, 1<<0, close, &vars); //close button
@@ -128,7 +131,7 @@ int	draw_shape(t_data *d, char *shape, int scale)
 		set_pixel(d, d->p.x, d->p.y, d->p.col);
 		put_pixel(d);
 	}
-	mlx_put_image_to_window(d->vars.mlx, d->vars.win, d->img.img, 0, 0);
+	mlx_put_image_to_window(d->mlx, d->win, d->img.img, 0, 0);
 	return (0);
 }
 
@@ -145,10 +148,10 @@ int	window(void)
 	d.img.ry = 1080;
 	d.p.x = 0;
 	d.p.y = 0;
-	d.vars.mlx = mlx_init();
-	d.img.img = mlx_new_image(d.vars.mlx, d.img.rx, d.img.ry);
+	d.mlx = mlx_init();
+	d.img.img = mlx_new_image(d.mlx, d.img.rx, d.img.ry);
 	d.img.addr = mlx_get_data_addr(d.img.img, &d.img.bits_per_pixel, &d.img.line_length, &d.img.endian);
-	d.vars.win = mlx_new_window(d.vars.mlx, d.img.rx, d.img.ry, "fdf");
+	d.win = mlx_new_window(d.mlx, d.img.rx, d.img.ry, "fdf");
 	// while (1)
 	// {
 	// 	if (d.px <= d.rx && d.py <= d.ry)
@@ -156,7 +159,7 @@ int	window(void)
 	// my_mlx_pixel_put(&img, d.px, d.py, d.color);
 
 	draw_shape(&d, "p", 100);
-	hooks(&d.vars);
-	mlx_loop(d.vars.mlx);
+	hooks(&d);
+	mlx_loop(d.mlx);
 	return (0);
 }
