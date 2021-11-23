@@ -6,7 +6,7 @@
 #    By: dkocob <dkocob@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/08/25 13:57:19 by dkocob        #+#    #+#                  #
-#    Updated: 2021/11/23 16:32:40 by dkocob        ########   odam.nl          #
+#    Updated: 2021/11/22 18:25:23 by dkocob        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ SRCS			= main.c fdf.c map.c
 NAME			= fdf
 OBJS			= $(patsubst %.c,obj/%.o,$(SRCS))
 LFLAGS			= -Lmlx -lmlx -framework OpenGL -framework AppKit
-# CFLAGS			= -Wall -Wextra #-Werror
+CFLAGS			= -Wall -Wextra #-Werror
 all:			$(NAME)
 
 $(NAME):		$(OBJS)
