@@ -6,7 +6,7 @@
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/21 19:08:11 by dkocob        #+#    #+#                 */
-/*   Updated: 2021/11/27 17:56:52 by dkocob        ########   odam.nl         */
+/*   Updated: 2021/11/27 19:03:25 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ typedef struct	s_mouse {
 
 typedef struct	s_data {
 	void			*mlx;
-	void			*image;
 	void			*win;
 	t_p				p;
 	t_img			img;
@@ -86,10 +85,8 @@ int			bresenham_RB(int sx, int sy, int ex, int ey, int col, t_data *d);
 int			put_line(int sx, int sy, int ex, int ey, int col, t_data *d);
 int			order_int(int *x1, int *y1, int *x2, int *y2);
 int			get_next_line(int fd, char **line);
-int			ft_isdigit(char c);
-long long	val(char *s);
 int			map_init(int fd, t_data *d);
-int	build_frame (t_data *d);
+int			build_frame (t_data *d);
 
 
 

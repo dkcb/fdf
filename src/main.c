@@ -6,7 +6,7 @@
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/21 18:56:32 by dkocob        #+#    #+#                 */
-/*   Updated: 2021/11/26 23:06:22 by dkocob        ########   odam.nl         */
+/*   Updated: 2021/11/27 18:59:12 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	main(int argc, char **argv)
 	if (!((fd = open("./test_maps/10-2.fdf", O_RDONLY)) >= 0))
 		return (-1);
 	// map_cnt(x);
-	map_init(fd, &d);	
+	map_init(fd, &d);
 	window(&d);
 
 	return (0);

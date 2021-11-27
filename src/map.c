@@ -6,7 +6,7 @@
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/21 19:00:06 by dkocob        #+#    #+#                 */
-/*   Updated: 2021/11/27 17:53:22 by dkocob        ########   odam.nl         */
+/*   Updated: 2021/11/27 18:57:28 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,62 @@ size_t	dc(char *s, char c)
 	return (i);
 }
 
-int	map_read()
+size_t	c_cnt(char *s, char c)
 {
-		// current = (t_line *)malloc(sizeof(struct s_node * dc(line, '\0')));
+	size_t	i;
+	size_t	i2;
+
+	i = 0;
+	i2 = 0;
+	while (s[i])
+	{
+		if (s[i] == c)
+			i2++;
+		i++;
+	}
+	return (i2);
+}
+
+int	values(t_data *d)
+{
+	int	**numeric;
+	int	i1 = 0;
+	int	i2 = 0;
+	int	c = 0;
+
+	d->map.current = d->map.lhead;
+	numeric = malloc(sizeof(int *) * d->map.size_y);
+	while (i1 < d->map.size_y)
+	{
+		numeric[i1] = malloc(sizeof(int) * d->map.size_x);
+		while (i2 < d->map.size_x)
+		{
+			numeric[i1][i2] = (int)val(&d->map.current->line[c]);
+			while (ft_isdigit(d->map.current->line[c]) || d->map.current->line[c] == '-')
+				c++;
+			while (d->map.current->line[c] == ' ')
+				c++;
+			i2++;
+		}
+		d->map.current = d->map.current->next;
+		i2 = 0;
+		c = 0;
+		i1++;
+	}
+	
+	i1 = 0;
+	i2 = 0;
+	while (i1 < d->map.size_y)
+	{
+		while (i2 < d->map.size_x)
+			{
+				printf("%d ,", numeric[i1][i2]);
+				i2++;
+			}
+			printf("\n");
+			i2 = 0;
+			i1++;
+	}
 	return (0);
 }
 
@@ -65,17 +118,19 @@ int	map_init(int fd, t_data *d)
 			break ;
 		i++;
 	
-		d->map.size_y = i;
-		d->map.size_x = 10;
 	}
-		printf("sizeY:%d\n", d->map.size_y);
-		printf("sizeX:%d\n", d->map.size_x);
+		d->map.size_y = i;
+		d->map.size_x = c_cnt(d->map.lhead->line, ' ');
+		// printf("sizeY:%d\n", d->map.size_y);
+		// printf("sizeX:%d\n", d->map.size_x);
 	d->map.current = d->map.lhead;
 	while (i > -1)
 	{
 		// printf("Sline:%s\n", d->map.current->line);
 		d->map.current = d->map.current->next;
+
 		i--;
 	}
+	values(d);
 	return (1);
 }

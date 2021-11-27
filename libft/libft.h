@@ -6,7 +6,7 @@
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/17 15:29:12 by dkocob        #+#    #+#                 */
-/*   Updated: 2021/11/26 21:33:20 by dkocob        ########   odam.nl         */
+/*   Updated: 2021/11/27 18:37:49 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,6 @@
 void		ft_putstring(char *s);
 void		ft_putstring_fd(char *s, int fd);
 int			ft_isdigit(char c);
-long long	val(char *s);
+long		val(char *s);
 
 #endif

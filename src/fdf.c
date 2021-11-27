@@ -6,7 +6,7 @@
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/20 17:54:41 by dkocob        #+#    #+#                 */
-/*   Updated: 2021/11/27 17:21:53 by dkocob        ########   odam.nl         */
+/*   Updated: 2021/11/27 19:33:56 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,6 +164,35 @@ int	draw_cube(t_data *d)
 	return (0);
 }
 
+int	map_draw_borders(t_data *d)
+{	
+	int	i1 = 0;
+	int	i2 = 0;
+	int	unitx = d->img.rx / (d->map.size_x + 2);
+	int	unity = d->img.ry / (d->map.size_y + 4);
+	int gapx = unitx * 1;
+	int gapy = unity * 1;
+
+	// put_line(unitx, unity, d->img.rx - unitx, d->img.ry - unity, 0x00FF0000, d);
+	// put_line(unitx, unity, d->img.rx - unitx, unity, 0x00FF0000, d);
+	while (i1 < d->map.size_y)
+	{
+		while (i2 < d->map.size_x)
+		{
+			// put_line(gapx + unitx * i2, gapy + unity * i1, gapx + unitx * (i2 + 1), gapy + unity * (i1 + 1), 0x00FF0000, d);
+			put_line(gapx + unitx * i2, gapy + unity * i1, gapx + unitx * (i2 + 1), gapy + unity * i1, 0x00FF0000, d);
+			put_line(gapx + unitx * i2, gapy + unity * i1, gapx + unitx * i2 , gapy + unity * (i1 + 1), 0x00FF0000, d);
+			i2++;
+		}
+		i2 = 0;
+		i1++;
+	}
+	put_line(gapx , gapy + unity * d->map.size_y, gapx + unitx * d->map.size_x, gapy + unity * d->map.size_y, 0x00FF0000, d);
+	put_line(gapx + unitx * d->map.size_x, gapy, gapx + unitx * d->map.size_x , gapy + unity * d->map.size_y, 0x00FF0000, d);
+	mlx_put_image_to_window(d->mlx, d->win, d->img.img, 0, 0);
+	return (0);
+}
+
 int	window(t_data *d)
 {
 
@@ -176,7 +205,8 @@ int	window(t_data *d)
 	d->img.img = mlx_new_image(d->mlx, d->img.rx, d->img.ry);
 	d->img.addr = mlx_get_data_addr(d->img.img, &d->img.bits_per_pixel, &d->img.line_length, &d->img.endian);
 	d->win = mlx_new_window(d->mlx, d->img.rx, d->img.ry, "fdf");
-	draw_cube(d);
+	// draw_cube(d);
+	map_draw_borders(d);
 	hooks(d);
 	mlx_loop(d->mlx);
 	return (0);
