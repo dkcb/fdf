@@ -6,7 +6,7 @@
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/20 17:54:41 by dkocob        #+#    #+#                 */
-/*   Updated: 2021/11/27 19:33:56 by dkocob        ########   odam.nl         */
+/*   Updated: 2021/11/27 19:37:50 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,10 +168,11 @@ int	map_draw_borders(t_data *d)
 {	
 	int	i1 = 0;
 	int	i2 = 0;
-	int	unitx = d->img.rx / (d->map.size_x + 2);
-	int	unity = d->img.ry / (d->map.size_y + 4);
-	int gapx = unitx * 1;
-	int gapy = unity * 1;
+	int	unitx = d->img.rx / (d->map.size_x + 20);
+	int	unity = unitx;
+	// int	unity = d->img.ry / (d->map.size_y + 4);
+	int gapx = unitx * 10;
+	int gapy = unity * 3;
 
 	// put_line(unitx, unity, d->img.rx - unitx, d->img.ry - unity, 0x00FF0000, d);
 	// put_line(unitx, unity, d->img.rx - unitx, unity, 0x00FF0000, d);
