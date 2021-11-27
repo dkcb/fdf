@@ -6,7 +6,7 @@
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/21 19:08:11 by dkocob        #+#    #+#                 */
-/*   Updated: 2021/11/25 18:22:45 by dkocob        ########   odam.nl         */
+/*   Updated: 2021/11/27 17:56:52 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,60 +14,83 @@
 # define FDF_H
 #include <fcntl.h>
 #include "../mlx/mlx.h"
+#include "../libft/libft.h"
 #include <stdio.h>
 #include <stdlib.h>
 #define X_REZ 1920
 #define Y_REZ 1080
 
+typedef struct	s_node {
+
+}				t_node;
+
+typedef struct	s_line{
+	char			*line;
+	struct s_line	*next;
+}					t_line;
+
+typedef struct	s_map {
+	int				size_x;
+	int				size_y;
+	t_line			*lhead;
+	t_line			*current;
+}				t_map;
 
 typedef struct	s_img {
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-	int		rx;
-	int		ry;
+	void			*img;
+	char			*addr;
+	int				bits_per_pixel;
+	int				line_length;
+	int				endian;
+	int				rx;
+	int				ry;
 }				t_img;
 
 typedef struct	s_p {
-	int		x;
-	int		y;
-	int		col;
+	int				x;
+	int				y;
+	int				col;
 }				t_p;
 
 typedef struct	s_obj {
-	int		x;
-	int		y;
-	int		col;
+	int				x;
+	int				y;
+	int				col;
 }				t_obj;
 
 typedef struct	s_mouse {
-	int		pr;
-	int		px;
-	int		py;
-	int		dfpx;
-	int		dfpy;
-	int		mrl;
+	int				pr;
+	int				px;
+	int				py;
+	int				dfpx;
+	int				dfpy;
+	int				mrl;
 }				t_mouse;
 
 typedef struct	s_data {
-	void	*mlx;
-	void	*image;
-	void	*win;
-	t_p		p;
-	t_img	img;
-	t_mouse	m;
+	void			*mlx;
+	void			*image;
+	void			*win;
+	t_p				p;
+	t_img			img;
+	t_mouse			m;
+	t_map			map;
 }				t_data;
 
 // void	my_mlx_pixel_put(t_img *img, int x, int y, int color);
-int		window(void);
-int		mouse_release(int press, int x, int y, t_data *d);
-int		mouse_press(int press, int x, int y, t_data *d);
-int		draw(t_data *d);
-int		bresenham_RB(int sx, int sy, int ex, int ey, int col, t_data *d);
-int		put_line(int sx, int sy, int ex, int ey, int col, t_data *d);
-int		order_int(int *x1, int *y1, int *x2, int *y2);
+int			window(t_data *d);
+int			mouse_release(int press, int x, int y, t_data *d);
+int			mouse_press(int press, int x, int y, t_data *d);
+int			draw(t_data *d);
+int			bresenham_RB(int sx, int sy, int ex, int ey, int col, t_data *d);
+int			put_line(int sx, int sy, int ex, int ey, int col, t_data *d);
+int			order_int(int *x1, int *y1, int *x2, int *y2);
+int			get_next_line(int fd, char **line);
+int			ft_isdigit(char c);
+long long	val(char *s);
+int			map_init(int fd, t_data *d);
+int	build_frame (t_data *d);
+
 
 
 

@@ -6,7 +6,7 @@
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/20 17:54:41 by dkocob        #+#    #+#                 */
-/*   Updated: 2021/11/25 19:30:54 by dkocob        ########   odam.nl         */
+/*   Updated: 2021/11/27 17:21:53 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	put_pixel(int x, int y, int col, t_data *d)
 	}
 }
 
-int	close(int keycode, t_data *d)
+int	closehook(int keycode, t_data *d)
 {
 	(void)d;
 	printf("ECKEYCODE:%d\n", keycode);
@@ -83,8 +83,8 @@ int	mouse_release(int press, int x, int y, t_data *d)
 int	hooks(t_data *d)
 {
 
-	mlx_hook(d->win, 2, 1<<0, close, d); //key press
-	mlx_hook(d->win, 17, 1<<0, close, d); //close button
+	mlx_hook(d->win, 2, 1<<0, closehook, d); //key press
+	mlx_hook(d->win, 17, 1<<0, closehook, d); //close button
 	mlx_hook(d->win, 4, 0, mouse_press, d);
 	mlx_hook(d->win, 5, 0, mouse_release, d);
 	mlx_hook(d->win, 6, 0, mouse_move, d);
@@ -164,22 +164,20 @@ int	draw_cube(t_data *d)
 	return (0);
 }
 
-int	window(void)
+int	window(t_data *d)
 {
-	t_data	d;
 
-	d.img.rx = X_REZ;
-	d.img.ry = Y_REZ;
-	d.p.col = 0x00FF0000;
-	d.p.x = 0;
-	d.p.y = 0;
-	d.mlx = mlx_init();
-	d.img.img = mlx_new_image(d.mlx, d.img.rx, d.img.ry);
-	d.img.addr = mlx_get_data_addr(d.img.img, &d.img.bits_per_pixel, &d.img.line_length, &d.img.endian);
-	d.win = mlx_new_window(d.mlx, d.img.rx, d.img.ry, "fdf");
-	// mlx_put_image_to_window(&d.mlx, &d.win, &d.img.img, 0, 0);
-	draw_cube(&d);
-	hooks(&d);
-	mlx_loop(d.mlx);
+	d->img.rx = X_REZ;
+	d->img.ry = Y_REZ;
+	d->p.col = 0x00FF0000;
+	d->p.x = 0;
+	d->p.y = 0;
+	d->mlx = mlx_init();
+	d->img.img = mlx_new_image(d->mlx, d->img.rx, d->img.ry);
+	d->img.addr = mlx_get_data_addr(d->img.img, &d->img.bits_per_pixel, &d->img.line_length, &d->img.endian);
+	d->win = mlx_new_window(d->mlx, d->img.rx, d->img.ry, "fdf");
+	draw_cube(d);
+	hooks(d);
+	mlx_loop(d->mlx);
 	return (0);
 }

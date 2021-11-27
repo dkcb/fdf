@@ -1,29 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   libft.h                                            :+:    :+:            */
+/*   frame.c                                            :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/08/17 15:29:12 by dkocob        #+#    #+#                 */
-/*   Updated: 2021/11/26 21:33:20 by dkocob        ########   odam.nl         */
+/*   Created: 2021/11/27 17:55:01 by dkocob        #+#    #+#                 */
+/*   Updated: 2021/11/27 17:56:13 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFT_H
-# define LIBFT_H
+#include "../includes/fdf.h"
 
-# include <string.h>
-# include <stdlib.h>
-# include <unistd.h>
-
-# ifndef OPEN_MAX
-#  define OPEN_MAX 32
-# endif
-
-void		ft_putstring(char *s);
-void		ft_putstring_fd(char *s, int fd);
-int			ft_isdigit(char c);
-long long	val(char *s);
-
-#endif
+int	build_frame (t_data *d)
+{
+	return (0);
+}

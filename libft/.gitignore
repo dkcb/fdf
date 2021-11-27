@@ -1,9 +1,0 @@
-*.o
-*.so
-*.a
-libft
-.vscode/
-a.out
-a.out.dSYM/
-.DS_Store
-.idea/
