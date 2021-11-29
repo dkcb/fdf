@@ -6,7 +6,7 @@
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/21 18:56:32 by dkocob        #+#    #+#                 */
-/*   Updated: 2021/11/27 18:59:12 by dkocob        ########   odam.nl         */
+/*   Updated: 2021/11/28 22:35:47 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@ int	main(int argc, char **argv)
 	t_data	d;
 
 	// if (!((fd = open(argv[1], O_RDONLY)) >= 0))
+	// if (!((fd = open("./test_maps/20-60.fdf", O_RDONLY)) >= 0))
+	// if (!((fd = open("./test_maps/julia.fdf", O_RDONLY)) >= 0))
+	// if (!((fd = open("./test_maps/100-6.fdf", O_RDONLY)) >= 0))
 	if (!((fd = open("./test_maps/10-2.fdf", O_RDONLY)) >= 0))
 		return (-1);
 	// map_cnt(x);

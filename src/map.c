@@ -6,7 +6,7 @@
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/21 19:00:06 by dkocob        #+#    #+#                 */
-/*   Updated: 2021/11/27 18:57:28 by dkocob        ########   odam.nl         */
+/*   Updated: 2021/11/29 19:23:35 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	values(t_data *d)
 				c++;
 			i2++;
 		}
-		d->map.current = d->map.current->next;
+		d->map.lhead = d->map.current;
 		i2 = 0;
 		c = 0;
 		i1++;
@@ -71,7 +71,7 @@ int	values(t_data *d)
 	{
 		while (i2 < d->map.size_x)
 			{
-				printf("%d ,", numeric[i1][i2]);
+				printf("%d ", numeric[i1][i2]);
 				i2++;
 			}
 			printf("\n");
@@ -121,8 +121,8 @@ int	map_init(int fd, t_data *d)
 	}
 		d->map.size_y = i;
 		d->map.size_x = c_cnt(d->map.lhead->line, ' ');
-		// printf("sizeY:%d\n", d->map.size_y);
-		// printf("sizeX:%d\n", d->map.size_x);
+		printf("sizeY:%d\n", d->map.size_y);
+		printf("sizeX:%d\n", d->map.size_x);
 	d->map.current = d->map.lhead;
 	while (i > -1)
 	{

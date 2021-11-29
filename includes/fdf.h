@@ -6,7 +6,7 @@
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/21 19:08:11 by dkocob        #+#    #+#                 */
-/*   Updated: 2021/11/27 19:03:25 by dkocob        ########   odam.nl         */
+/*   Updated: 2021/11/29 19:07:32 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,15 @@
 #define X_REZ 1920
 #define Y_REZ 1080
 
-typedef struct	s_node {
 
+typedef struct	s_node {
+	double	x0;
+	double	y0;
+	double	z0;
+	double	x1;
+	double	y1;
+	double	z1;
+	int		color;
 }				t_node;
 
 typedef struct	s_line{
@@ -32,6 +39,11 @@ typedef struct	s_line{
 typedef struct	s_map {
 	int				size_x;
 	int				size_y;
+	int				unx;
+	int				uny;
+	int				gapx;
+	int				gapy;
+	int				iso;
 	t_line			*lhead;
 	t_line			*current;
 }				t_map;
@@ -311,4 +323,35 @@ int			build_frame (t_data *d);
 // 	}
 // 	mlx_put_image_to_window(d->mlx, d->win, d->img.img, 0, 0);
 
+// }int	map_draw_borders(t_data *d)
+// {	
+// 	int	i1 = 0;
+// 	int	i2 = 0;
+// 	int	unitx = d->img.rx / (d->map.size_x + 20);
+// 	int	unity = unitx;
+// 	// int	unity = d->img.ry / (d->map.size_y + 4);
+// 	int gapx = unitx;
+// 	int gapy = unity;
+// 	int	isometry = unitx * 2;
+// 	// int gapx = unitx * 10;
+// 	// int gapy = unity * 3;
+
+// 	// put_line(unitx, unity, d->img.rx - unitx, d->img.ry - unity, 0x00FF0000, d);
+// 	// put_line(unitx, unity, d->img.rx - unitx, unity, 0x00FF0000, d);
+// 	while (i1 < d->map.size_y)
+// 	{
+// 		while (i2 < d->map.size_x)
+// 		{
+// 			// put_line(gapx + unitx * i2, gapy + unity * i1, gapx + unitx * (i2 + 1), gapy + unity * (i1 + 1), 0x00FF0000, d);
+// 			put_line((gapx + unitx * i2) + isometry, (gapy + unity * i1) - isometry, (gapx + unitx * (i2 + 1)) + isometry, (gapy + unity * i1) - isometry, 0x00FF0000, d); // X lines
+// 			put_line((gapx + unitx * i2) + isometry, (gapy + unity * i1) + isometry, (gapx + unitx * i2) + isometry , (gapy + unity * (i1 + 1)) + isometry, 0x00FF0000, d); // Y lines
+// 			i2++;
+// 		}
+// 		i2 = 0;
+// 		i1++;
+// 	}
+// 	put_line(gapx , gapy + unity * d->map.size_y, gapx + unitx * d->map.size_x, gapy + unity * d->map.size_y, 0x00FF0000, d); // X lines
+// 	put_line(gapx + unitx * d->map.size_x, gapy, gapx + unitx * d->map.size_x , gapy + unity * d->map.size_y, 0x00FF0000, d); // Y lines
+// 	mlx_put_image_to_window(d->mlx, d->win, d->img.img, 0, 0);
+// 	return (0);
 // }

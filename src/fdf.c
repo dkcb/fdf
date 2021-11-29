@@ -6,7 +6,7 @@
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/20 17:54:41 by dkocob        #+#    #+#                 */
-/*   Updated: 2021/11/27 19:37:50 by dkocob        ########   odam.nl         */
+/*   Updated: 2021/11/29 19:20:21 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ int	put_line(int x1, int y1, int x2, int y2, int col, t_data *d)
 			// printf("abs(%d, %d):%d; -abs:%d),", -13, 22, -abs (-13 - 22), abs (-13 - 22));
 	// {
 	bresenham_(x1, y1, x2, y2, col, d);
-	mlx_put_image_to_window(d->mlx, d->win, d->img.img, 0, 0);
+	// mlx_put_image_to_window(d->mlx, d->win, d->img.img, 0, 0);
 	// }
 	return (0);
 }
@@ -168,28 +168,28 @@ int	map_draw_borders(t_data *d)
 {	
 	int	i1 = 0;
 	int	i2 = 0;
-	int	unitx = d->img.rx / (d->map.size_x + 20);
-	int	unity = unitx;
-	// int	unity = d->img.ry / (d->map.size_y + 4);
-	int gapx = unitx * 10;
-	int gapy = unity * 3;
 
-	// put_line(unitx, unity, d->img.rx - unitx, d->img.ry - unity, 0x00FF0000, d);
-	// put_line(unitx, unity, d->img.rx - unitx, unity, 0x00FF0000, d);
+	d->map.unx = d->img.rx / (d->map.size_x + 20);
+	d->map.uny = d->map.unx;
+	d->map.gapx =  d->map.unx;
+	d->map.gapy =  d->map.gapx;
+	d->map.iso = d->map.unx;
 	while (i1 < d->map.size_y)
 	{
 		while (i2 < d->map.size_x)
 		{
-			// put_line(gapx + unitx * i2, gapy + unity * i1, gapx + unitx * (i2 + 1), gapy + unity * (i1 + 1), 0x00FF0000, d);
-			put_line(gapx + unitx * i2, gapy + unity * i1, gapx + unitx * (i2 + 1), gapy + unity * i1, 0x00FF0000, d);
-			put_line(gapx + unitx * i2, gapy + unity * i1, gapx + unitx * i2 , gapy + unity * (i1 + 1), 0x00FF0000, d);
+			// put_line(d->map.gapx + d->map.unx * i2, d->map.gapy + d->map.uny * i1, d->map.gapx + d->map.unx * (i2 + 1), d->map.gapy + d->map.uny * (i1 + 1), 0x00FF0000, d);
+			// put_line((d->map.gapx + d->map.unx * i2) + d->map.iso, (d->map.gapy + d->map.uny * i1) - d->map.iso, (d->map.gapx + d->map.unx * (i2 + 1)) + d->map.iso, (d->map.gapy + d->map.uny * i1) - d->map.iso, 0x00FF0000, d); // X lines
+			// put_line((d->map.gapx + d->map.unx * i2) + d->map.iso, (d->map.gapy + d->map.uny * i1) + d->map.iso, (d->map.gapx + d->map.unx * i2) + d->map.iso , (d->map.gapy + d->map.uny * (i1 + 1)) + d->map.iso, 0x00FF0000, d); // Y lines
+			put_line((d->map.gapx + d->map.unx * i2), (d->map.gapy + d->map.uny * i1) + d->map.iso, (d->map.gapx + d->map.unx * i2) + d->map.iso , (d->map.gapy + d->map.uny * (i1 + 1)) + d->map.iso, 0x00FF0000, d); // Y lines
+			put_line((d->map.gapx + d->map.unx * i2), (d->map.gapy + d->map.uny * i1) + d->map.iso, (d->map.gapx + d->map.unx * i2) + d->map.iso , (d->map.gapy + d->map.uny * (i1 + 1)) + d->map.iso, 0x00FF0000, d); // Y lines
 			i2++;
 		}
 		i2 = 0;
 		i1++;
 	}
-	put_line(gapx , gapy + unity * d->map.size_y, gapx + unitx * d->map.size_x, gapy + unity * d->map.size_y, 0x00FF0000, d);
-	put_line(gapx + unitx * d->map.size_x, gapy, gapx + unitx * d->map.size_x , gapy + unity * d->map.size_y, 0x00FF0000, d);
+	// put_line(d->map.gapx , d->map.gapy + d->map.uny * d->map.size_y, d->map.gapx + d->map.unx * d->map.size_x, d->map.gapy + d->map.uny * d->map.size_y, 0x00FF0000, d); // X lines
+	// put_line(d->map.gapx + d->map.unx * d->map.size_x, d->map.gapy, d->map.gapx + d->map.unx * d->map.size_x , d->map.gapy + d->map.uny * d->map.size_y, 0x00FF0000, d); // Y lines
 	mlx_put_image_to_window(d->mlx, d->win, d->img.img, 0, 0);
 	return (0);
 }
@@ -209,6 +209,7 @@ int	window(t_data *d)
 	// draw_cube(d);
 	map_draw_borders(d);
 	hooks(d);
+	mlx_put_image_to_window(d->mlx, d->win, d->img.img, 0, 0);
 	mlx_loop(d->mlx);
 	return (0);
 }
