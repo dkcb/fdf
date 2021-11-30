@@ -6,7 +6,7 @@
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/21 19:00:06 by dkocob        #+#    #+#                 */
-/*   Updated: 2021/11/29 19:23:35 by dkocob        ########   odam.nl         */
+/*   Updated: 2021/11/30 20:32:41 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,9 @@ int	values(t_data *d)
 
 int	get_arg_stack(t_data *d, char **line)
 {
-	t_line	*new;
+	struct s_line	*new;
 
-	new = malloc(sizeof(t_line) * 1);
+	new = malloc(sizeof(struct s_line));
 	if (!line[0] || !new)
 		return (-1);
 	new->line = *line;

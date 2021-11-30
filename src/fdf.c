@@ -6,7 +6,7 @@
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/20 17:54:41 by dkocob        #+#    #+#                 */
-/*   Updated: 2021/11/29 19:20:21 by dkocob        ########   odam.nl         */
+/*   Updated: 2021/11/30 21:17:57 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,6 @@ void	put_pixel(int x, int y, int col, t_data *d)
 {
 	char	*dst;
 	
-	// if (x != 0)
-	// 	x = d->p.x;
-	// if (y != 0)
-	// 	y = d->p.y;
-	// if (col != 0)
-	// 	col = d->p.col;
 	if (x >= 0 && x < d->img.rx && y < d->img.ry && y >= 0)
 	{
 		dst = d->img.addr + (y * d->img.line_length + x * (d->img.bits_per_pixel / 8));
@@ -50,8 +44,6 @@ int	mouse_move(int x, int y, t_data *d)
 		// printf("MPR==1! x:%d, y:%d, mpr:%d\n", x, y, d->m.pr);
 		put_pixel(x, y, 0x00FF0000, d);
 		mlx_put_image_to_window(d->mlx, d->win, d->img.img, 0, 0);
-
-		// draw(d);
 	}
 	return (0);
 }
@@ -61,17 +53,28 @@ int	mouse_press(int press, int x, int y, t_data *d)
 	d->m.pr = 1;
 	d->m.px = x;
 	d->m.py = y;
-	// printf("MPress:%d, x:%d, y:%d\n", press, x, y);
+	// printf("MPress:%d, x:%d, y:%d\n", d->m.pr, d->m.px, d->m.py);
 	return (0);
 }
 
 int	mouse_release(int press, int x, int y, t_data *d)
 {
-	// printf("MRelease:%d, x:%d, y:%d\n", press, x, y);
+	printf("MPress:%d, x:%d, y:%d\n", d->m.pr, d->m.px, d->m.py);
+	printf("MRelease:%d, x:%d, y:%d\n", press, x, y);
+
 	if (d->m.pr == 1)
 	{
 		// printf("MPR==1! x:%d, y:%d, mpr:%d\n", x, y, d->m.pr);
-		put_line(d->m.px, d->m.py, x, y, 0x00FF0000, d);
+		// put_line(d->m.px, d->m.py, x, y, 0x00FF0000, d);
+		d->v.x1 = d->m.px;
+		d->v.y1 = d->m.py;
+		d->v.x2 = x;
+		d->v.y2 = y;
+		d->v.ang = random();
+		d->v.len = abs(d->m.py - y);
+		d->v.col = 0x035F3000;
+		put_object(d);
+
 
 		// draw(d);
 	}
@@ -141,12 +144,7 @@ void	bresenham_ (int x1, int y1, int x2, int y2, int col, t_data *d)
 int	put_line(int x1, int y1, int x2, int y2, int col, t_data *d)
 {
 	order_int(&x1, &y1, &x2, &y2);
-	// if ( y1 <= y2)
-			// printf("abs(%d, %d):%d; -abs:%d),", -13, 22, -abs (-13 - 22), abs (-13 - 22));
-	// {
 	bresenham_(x1, y1, x2, y2, col, d);
-	// mlx_put_image_to_window(d->mlx, d->win, d->img.img, 0, 0);
-	// }
 	return (0);
 }
 
@@ -164,32 +162,43 @@ int	draw_cube(t_data *d)
 	return (0);
 }
 
-int	map_draw_borders(t_data *d)
-{	
-	int	i1 = 0;
-	int	i2 = 0;
 
-	d->map.unx = d->img.rx / (d->map.size_x + 20);
-	d->map.uny = d->map.unx;
-	d->map.gapx =  d->map.unx;
-	d->map.gapy =  d->map.gapx;
-	d->map.iso = d->map.unx;
-	while (i1 < d->map.size_y)
-	{
-		while (i2 < d->map.size_x)
-		{
-			// put_line(d->map.gapx + d->map.unx * i2, d->map.gapy + d->map.uny * i1, d->map.gapx + d->map.unx * (i2 + 1), d->map.gapy + d->map.uny * (i1 + 1), 0x00FF0000, d);
-			// put_line((d->map.gapx + d->map.unx * i2) + d->map.iso, (d->map.gapy + d->map.uny * i1) - d->map.iso, (d->map.gapx + d->map.unx * (i2 + 1)) + d->map.iso, (d->map.gapy + d->map.uny * i1) - d->map.iso, 0x00FF0000, d); // X lines
-			// put_line((d->map.gapx + d->map.unx * i2) + d->map.iso, (d->map.gapy + d->map.uny * i1) + d->map.iso, (d->map.gapx + d->map.unx * i2) + d->map.iso , (d->map.gapy + d->map.uny * (i1 + 1)) + d->map.iso, 0x00FF0000, d); // Y lines
-			put_line((d->map.gapx + d->map.unx * i2), (d->map.gapy + d->map.uny * i1) + d->map.iso, (d->map.gapx + d->map.unx * i2) + d->map.iso , (d->map.gapy + d->map.uny * (i1 + 1)) + d->map.iso, 0x00FF0000, d); // Y lines
-			put_line((d->map.gapx + d->map.unx * i2), (d->map.gapy + d->map.uny * i1) + d->map.iso, (d->map.gapx + d->map.unx * i2) + d->map.iso , (d->map.gapy + d->map.uny * (i1 + 1)) + d->map.iso, 0x00FF0000, d); // Y lines
-			i2++;
-		}
-		i2 = 0;
-		i1++;
-	}
-	// put_line(d->map.gapx , d->map.gapy + d->map.uny * d->map.size_y, d->map.gapx + d->map.unx * d->map.size_x, d->map.gapy + d->map.uny * d->map.size_y, 0x00FF0000, d); // X lines
-	// put_line(d->map.gapx + d->map.unx * d->map.size_x, d->map.gapy, d->map.gapx + d->map.unx * d->map.size_x , d->map.gapy + d->map.uny * d->map.size_y, 0x00FF0000, d); // Y lines
+int	put_vector_br(int x1, int y1, double ang, double len, int col, t_data *d)
+{
+	int x2;
+	int y2;
+
+	x2 = x1 + len * cos(ang);
+	y2 = y1 + len * sin(ang);
+	
+	put_line(x1, y1, x2, y2, col, d);
+	return (0);
+}
+
+int	put_object(t_data *d)
+{
+	int i1 = 0;
+	int i2 = 0;
+	d->map.un = d->img.rx / (d->map.size_x + 4);
+	
+	// while (i < 10)
+	// {
+	// 	put_line()
+	// 	i++;
+	// }
+
+	put_vector(d->v.x1, d->v.x1, d->v.ang, d->v.len,  d->v.col, d);
+	// while (i1 < d->map.size_y)
+	// {
+	// 	while (i2 < d->map.size_x)
+	// 		{
+	// 			put_vector(200, 200, 75, 300, 0x035F3000, d);
+	// 			i2++;
+	// 		}
+	// 		printf("\n");
+	// 		i2 = 0;
+	// 		i1++;
+	// }
 	mlx_put_image_to_window(d->mlx, d->win, d->img.img, 0, 0);
 	return (0);
 }
@@ -207,7 +216,7 @@ int	window(t_data *d)
 	d->img.addr = mlx_get_data_addr(d->img.img, &d->img.bits_per_pixel, &d->img.line_length, &d->img.endian);
 	d->win = mlx_new_window(d->mlx, d->img.rx, d->img.ry, "fdf");
 	// draw_cube(d);
-	map_draw_borders(d);
+	// map_draw_borders(d);
 	hooks(d);
 	mlx_put_image_to_window(d->mlx, d->win, d->img.img, 0, 0);
 	mlx_loop(d->mlx);

@@ -6,30 +6,38 @@
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/21 19:08:11 by dkocob        #+#    #+#                 */
-/*   Updated: 2021/11/29 19:07:32 by dkocob        ########   odam.nl         */
+/*   Updated: 2021/11/30 21:18:04 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
-#include <fcntl.h>
 #include "../mlx/mlx.h"
 #include "../libft/libft.h"
+#include <fcntl.h>
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #define X_REZ 1920
 #define Y_REZ 1080
 
+typedef struct	s_p {
+	int				x;
+	int				y;
+	int				col;
+}				t_p;
 
-typedef struct	s_node {
-	double	x0;
-	double	y0;
-	double	z0;
+typedef struct	s_v {
 	double	x1;
 	double	y1;
 	double	z1;
-	int		color;
-}				t_node;
+	double	x2;
+	double	y2;
+	double	z2;
+	double	ang;
+	double	len;
+	int		col;
+}				t_v;
 
 typedef struct	s_line{
 	char			*line;
@@ -41,8 +49,11 @@ typedef struct	s_map {
 	int				size_y;
 	int				unx;
 	int				uny;
+	int				un;
 	int				gapx;
 	int				gapy;
+	int				shiftx;
+	int				shifty;
 	int				iso;
 	t_line			*lhead;
 	t_line			*current;
@@ -57,12 +68,6 @@ typedef struct	s_img {
 	int				rx;
 	int				ry;
 }				t_img;
-
-typedef struct	s_p {
-	int				x;
-	int				y;
-	int				col;
-}				t_p;
 
 typedef struct	s_obj {
 	int				x;
@@ -81,11 +86,12 @@ typedef struct	s_mouse {
 
 typedef struct	s_data {
 	void			*mlx;
-	void			*win;
+	t_v				v;
 	t_p				p;
-	t_img			img;
-	t_mouse			m;
+	void			*win;
 	t_map			map;
+	t_mouse			m;
+	t_img			img;
 }				t_data;
 
 // void	my_mlx_pixel_put(t_img *img, int x, int y, int color);
@@ -99,6 +105,9 @@ int			order_int(int *x1, int *y1, int *x2, int *y2);
 int			get_next_line(int fd, char **line);
 int			map_init(int fd, t_data *d);
 int			build_frame (t_data *d);
+int			put_object(t_data *d);
+int			put_vector(int x1, int y1, double ang, double len, int col, t_data *d);
+
 
 
 
@@ -353,5 +362,55 @@ int			build_frame (t_data *d);
 // 	put_line(gapx , gapy + unity * d->map.size_y, gapx + unitx * d->map.size_x, gapy + unity * d->map.size_y, 0x00FF0000, d); // X lines
 // 	put_line(gapx + unitx * d->map.size_x, gapy, gapx + unitx * d->map.size_x , gapy + unity * d->map.size_y, 0x00FF0000, d); // Y lines
 // 	mlx_put_image_to_window(d->mlx, d->win, d->img.img, 0, 0);
+// 	return (0);
+// }
+
+// int	map_draw_borders(t_data *d)
+// {	
+// 	int	i1 = 0;
+// 	int	i2 = 0;
+
+// 	d->map.unx = d->img.rx / (d->map.size_x + 20);
+// 	d->map.uny = d->map.unx;
+// 	d->map.gapx =  d->map.unx;
+// 	d->map.gapy =  d->map.gapx;
+// 	d->map.iso = 2;
+// 	d->map.shiftx = 2 * d->map.unx;
+// 	d->map.shifty = 1;
+// 	while (i1 < d->map.size_y)
+// 	{
+// 		while (i2 < d->map.size_x * 2)
+// 		{
+// 			// put_line(d->map.gapx + d->map.unx * i2, d->map.gapy + d->map.uny * i1, d->map.gapx + d->map.unx * (i2 + 1), d->map.gapy + d->map.uny * (i1 + 1), 0x00FF0000, d);
+// 			// put_line((d->map.gapx + d->map.unx * i2) + d->map.iso, (d->map.gapy + d->map.uny * i1) - d->map.iso, (d->map.gapx + d->map.unx * (i2 + 1)) + d->map.iso, (d->map.gapy + d->map.uny * i1) - d->map.iso, 0x00FF0000, d); // X lines
+// 			// put_line((d->map.gapx + d->map.unx * i2) + d->map.iso, (d->map.gapy + d->map.uny * i1) + d->map.iso, (d->map.gapx + d->map.unx * i2) + d->map.iso , (d->map.gapy + d->map.uny * (i1 + 1)) + d->map.iso, 0x00FF0000, d); // Y lines
+// 			// put_line((d->map.gapx + d->map.unx * i2)+ d->map.iso, (d->map.gapy + d->map.uny * i1), (d->map.gapx + d->map.unx * (i2 + 1)) + d->map.iso, (d->map.gapy + d->map.uny * i1), 0x00FF0000, d); // X lines
+// 			// put_line(d->map.gapx + d->map.unx * i2 + d->map.shiftx * i1 , (d->map.gapy + d->map.uny * i1) + d->map.iso, (d->map.gapx + d->map.unx * i2) + d->map.iso , (d->map.gapy + d->map.uny * (i1 + 1)) + d->map.iso, 0x00FF0000, d); // Y lines
+// 			put_line(d->map.gapx + d->map.unx * i2 + d->map.shiftx * i1 , d->map.gapy + d->map.uny * i1, d->map.gapx + d->map.unx * (i2 + 1) + d->map.shiftx * i1 , (d->map.gapy + d->map.uny * (i1 + 1)), 0x00FF0000, d); // Y2 lines
+// 			put_line(d->map.gapx + d->map.unx * i2 + d->map.shiftx * i1 , d->map.gapy + d->map.uny * i1, d->map.gapx + d->map.unx * i2 + d->map.shiftx * i1 + d->map.shiftx * i1 , (d->map.gapy + d->map.uny * (i1 + 1)), 0x035F3000, d); // X2 lines
+// 			i2+= 2;
+// 		}
+// 		i2 = 0;
+// 		i1+= 2;
+// 	}
+// 	return (0);
+// }
+
+// int	put_vector(int x1, int y1, double ang, double len, int col, t_data *d)
+// {
+// 	int x2;
+// 	int y2;
+// 	int dx = abs(x2 - x1);
+// 	int dy = abs(y2 - y1);
+
+// 	x2 = x1 + len * cos(ang);
+// 	y2 = y1 + len * sin(ang);
+
+// 	while (x1 != x2 || y1 != y2)
+// 	{
+// 		if (dx >= dy)
+// 		put_pixel(x1, y1, col, d);
+// 	}
+// 	// put_line(x1, y1, x2, y2, col, d);
 // 	return (0);
 // }
