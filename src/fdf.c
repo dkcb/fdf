@@ -6,7 +6,7 @@
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/20 17:54:41 by dkocob        #+#    #+#                 */
-/*   Updated: 2021/11/30 21:17:57 by dkocob        ########   odam.nl         */
+/*   Updated: 2021/12/01 22:02:56 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,15 +65,15 @@ int	mouse_release(int press, int x, int y, t_data *d)
 	if (d->m.pr == 1)
 	{
 		// printf("MPR==1! x:%d, y:%d, mpr:%d\n", x, y, d->m.pr);
-		// put_line(d->m.px, d->m.py, x, y, 0x00FF0000, d);
-		d->v.x1 = d->m.px;
-		d->v.y1 = d->m.py;
-		d->v.x2 = x;
-		d->v.y2 = y;
-		d->v.ang = random();
-		d->v.len = abs(d->m.py - y);
-		d->v.col = 0x035F3000;
-		put_object(d);
+	// 	d->v.x1 = d->m.px;
+	// 	d->v.y1 = d->m.py;
+	// 	d->v.x2 = x;
+	// 	d->v.y2 = y;
+	// 	d->v.ang = 33;
+	// 	d->v.len = abs(d->m.py - y);
+	// 	d->v.col = 0x035F3000;
+	// 	put_object(d);
+		put_line(d->m.px, d->m.py, x, y, 0x00FF0000, d);
 
 
 		// draw(d);
@@ -168,8 +168,8 @@ int	put_vector_br(int x1, int y1, double ang, double len, int col, t_data *d)
 	int x2;
 	int y2;
 
-	x2 = x1 + len * cos(ang);
-	y2 = y1 + len * sin(ang);
+	x2 = x1 + round(len * cos(ang));
+	y2 = y1 + round(len * sin(ang));
 	
 	put_line(x1, y1, x2, y2, col, d);
 	return (0);
@@ -187,7 +187,7 @@ int	put_object(t_data *d)
 	// 	i++;
 	// }
 
-	put_vector(d->v.x1, d->v.x1, d->v.ang, d->v.len,  d->v.col, d);
+	put_vector_br(d->v.x1, d->v.x1, d->v.ang, d->v.len,  d->v.col, d);
 	// while (i1 < d->map.size_y)
 	// {
 	// 	while (i2 < d->map.size_x)
@@ -216,7 +216,6 @@ int	window(t_data *d)
 	d->img.addr = mlx_get_data_addr(d->img.img, &d->img.bits_per_pixel, &d->img.line_length, &d->img.endian);
 	d->win = mlx_new_window(d->mlx, d->img.rx, d->img.ry, "fdf");
 	// draw_cube(d);
-	// map_draw_borders(d);
 	hooks(d);
 	mlx_put_image_to_window(d->mlx, d->win, d->img.img, 0, 0);
 	mlx_loop(d->mlx);

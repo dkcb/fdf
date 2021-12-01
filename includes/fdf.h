@@ -6,7 +6,7 @@
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/21 19:08:11 by dkocob        #+#    #+#                 */
-/*   Updated: 2021/11/30 21:18:04 by dkocob        ########   odam.nl         */
+/*   Updated: 2021/12/01 22:08:35 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,13 +85,13 @@ typedef struct	s_mouse {
 }				t_mouse;
 
 typedef struct	s_data {
-	void			*mlx;
-	t_v				v;
 	t_p				p;
-	void			*win;
+	void			*mlx;
 	t_map			map;
+	void			*win;
 	t_mouse			m;
 	t_img			img;
+	t_v				v;
 }				t_data;
 
 // void	my_mlx_pixel_put(t_img *img, int x, int y, int color);
@@ -106,7 +106,7 @@ int			get_next_line(int fd, char **line);
 int			map_init(int fd, t_data *d);
 int			build_frame (t_data *d);
 int			put_object(t_data *d);
-int			put_vector(int x1, int y1, double ang, double len, int col, t_data *d);
+int			put_vector_br(int x1, int y1, double ang, double len, int col, t_data *d);
 
 
 
