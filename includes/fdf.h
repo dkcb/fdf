@@ -6,7 +6,7 @@
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/21 19:08:11 by dkocob        #+#    #+#                 */
-/*   Updated: 2021/12/01 22:08:35 by dkocob        ########   odam.nl         */
+/*   Updated: 2021/12/11 19:53:22 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,48 +18,74 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
-#define X_REZ 1920
-#define Y_REZ 1080
+#define X_REZ 1024
+#define Y_REZ 768
+#define CONST 0.0174533
 
-typedef struct	s_p {
-	int				x;
-	int				y;
+typedef struct s_node {
+	int	x;
+	int	y;
+	int	z;
+}	t_node;
+
+typedef struct s_cube {
+	int				startx;
+	int				starty;
+	int				side;
+	int				rotx;
+	int				roty;
+	int 			rotz;
+	unsigned int	col;
+}	t_cube;
+
+struct	s_cam {
+	double			rotx;
+	double			roty;
+	double			rotz;
+	double			zoom;
+};
+
+struct	s_p {
+	double			x;
+	double			y;
+	double			z;
 	int				col;
-}				t_p;
+};
 
-typedef struct	s_v {
-	double	x1;
-	double	y1;
-	double	z1;
-	double	x2;
-	double	y2;
-	double	z2;
-	double	ang;
-	double	len;
-	int		col;
-}				t_v;
+struct	s_v {
+	struct s_p		orig;
+	struct s_p		start;
+	struct s_p		end;
+	double			ang;
+	double			len;
+	int				col;
+};
 
-typedef struct	s_line{
+struct	s_line {
 	char			*line;
 	struct s_line	*next;
-}					t_line;
+};
 
-typedef struct	s_map {
+struct	s_map {
+	// int				**array;
 	int				size_x;
 	int				size_y;
-	int				unx;
-	int				uny;
+	int				size_z;
+	// int				unx;
+	// int				uny;
 	int				un;
-	int				gapx;
-	int				gapy;
-	int				shiftx;
-	int				shifty;
-	int				iso;
-	t_line			*lhead;
-	t_line			*current;
-}				t_map;
+	// int				gapx;
+	// int				gapy;
+	// int				shiftx;
+	// int				shifty;
+	// int				iso;
+	// int				***l;
+	struct s_node	*v;
+	struct s_line	*lhead;
+	struct s_line	*current;
+};
 
-typedef struct	s_img {
+struct	s_img {
 	void			*img;
 	char			*addr;
 	int				bits_per_pixel;
@@ -67,46 +93,48 @@ typedef struct	s_img {
 	int				endian;
 	int				rx;
 	int				ry;
-}				t_img;
+};
 
-typedef struct	s_obj {
+struct	s_obj {
 	int				x;
 	int				y;
 	int				col;
-}				t_obj;
+};
 
-typedef struct	s_mouse {
+struct	s_mouse {
 	int				pr;
 	int				px;
 	int				py;
 	int				dfpx;
 	int				dfpy;
 	int				mrl;
-}				t_mouse;
+};
 
-typedef struct	s_data {
-	t_p				p;
-	void			*mlx;
-	t_map			map;
-	void			*win;
-	t_mouse			m;
-	t_img			img;
-	t_v				v;
-}				t_data;
+struct	s_data {
+	void					*win;
+	void					*mlx;
+	struct s_mouse			m;
+	struct s_map			map;
+	struct s_img			img;
+	struct s_p				p;
+	struct s_v				v;
+	struct s_node			*vs;
+};
 
-// void	my_mlx_pixel_put(t_img *img, int x, int y, int color);
-int			window(t_data *d);
-int			mouse_release(int press, int x, int y, t_data *d);
-int			mouse_press(int press, int x, int y, t_data *d);
-int			draw(t_data *d);
-int			bresenham_RB(int sx, int sy, int ex, int ey, int col, t_data *d);
-int			put_line(int sx, int sy, int ex, int ey, int col, t_data *d);
+int			window(struct s_data *d);
+int			mouse_release(int press, int x, int y, struct s_data *d);
+int			mouse_press(int press, int x, int y, struct s_data *d);
+int			draw(struct s_data *d);
+int			bresenham_RB(int sx, int sy, int ex, int ey, int col, struct s_data *d);
+int			put_line(int sx, int sy, int ex, int ey, int col, struct s_data *d);
 int			order_int(int *x1, int *y1, int *x2, int *y2);
 int			get_next_line(int fd, char **line);
-int			map_init(int fd, t_data *d);
-int			build_frame (t_data *d);
-int			put_object(t_data *d);
-int			put_vector_br(int x1, int y1, double ang, double len, int col, t_data *d);
+int			map_init(int fd, struct s_data *d);
+int			build_frame (struct s_data *d);
+int			put_object(struct s_data *d);
+int			put_vector_br(int x1, int y1, double ang, double len, int col, struct s_data *d);
+void		draw_vector_struct(struct s_data *d);
+
 
 
 
@@ -144,7 +172,7 @@ int			put_vector_br(int x1, int y1, double ang, double len, int col, t_data *d);
 // }
 
 
-// void	setup_controls(t_data *d)
+// void	setup_controls(struct s_data *d)
 // {
 // 	mlx_hook(d->win, 2, 0, key_press, &d);
 // 	mlx_hook(d->win, 17, 0, close, &d);
@@ -153,7 +181,7 @@ int			put_vector_br(int x1, int y1, double ang, double len, int col, t_data *d);
 // 	mlx_hook(d->win, 6, 0, mouse_move, &d);
 // }
 
-// int	set_pixel(t_data *d, int x, int y, int c)
+// int	set_pixel(struct s_data *d, int x, int y, int c)
 // {
 // 	d->p.x = x;
 // 	d->p.y = y;
@@ -167,7 +195,7 @@ int			put_vector_br(int x1, int y1, double ang, double len, int col, t_data *d);
 	// 	y = x;
 	// 	return (y);
 	// }
-// 	int	put_line(int sx, int sy, int ex, int ey, int col, t_data *d)
+// 	int	put_line(int sx, int sy, int ex, int ey, int col, struct s_data *d)
 // {
 // 	int cx = 0;
 // 	int cy = 0;
@@ -179,7 +207,7 @@ int			put_vector_br(int x1, int y1, double ang, double len, int col, t_data *d);
 // 	return (0);
 // }
 
-// int	put_line(int sx, int sy, int ex, int ey, int col, t_data *d)
+// int	put_line(int sx, int sy, int ex, int ey, int col, struct s_data *d)
 // {
 	
 // 	int x;
@@ -226,7 +254,7 @@ int			put_vector_br(int x1, int y1, double ang, double len, int col, t_data *d);
 // }
 
 
-// int	put_line(int x1, int y1, int x2, int y2, int col, t_data *d)
+// int	put_line(int x1, int y1, int x2, int y2, int col, struct s_data *d)
 // {
 	
 // 	double x;
@@ -285,7 +313,7 @@ int			put_vector_br(int x1, int y1, double ang, double len, int col, t_data *d);
 	// sy = y0 < y1 ? 1 : -1; 
 	// err = dx + dy;
 
-// 	void	bresenham_ (int x0, int y0, int x1, int y1, int col, t_data *d)
+// 	void	bresenham_ (int x0, int y0, int x1, int y1, int col, struct s_data *d)
 // {
 // 	int dx;
 // 	int dy;
@@ -314,7 +342,7 @@ int			put_vector_br(int x1, int y1, double ang, double len, int col, t_data *d);
 // 	}
 // 	mlx_put_image_to_window(d->mlx, d->win, d->img.img, 0, 0);
 // }
-// void	bresenham_ (int x0, int y0, int x1, int y1, int col, t_data *d)
+// void	bresenham_ (int x0, int y0, int x1, int y1, int col, struct s_data *d)
 // {
 // 	int dx =  abs (x1 - x0), sx = x0 < x1 ? 1 : -1;
 // 	int dy = -abs (y1 - y0), sy = y0 < y1 ? 1 : -1; 
@@ -332,7 +360,7 @@ int			put_vector_br(int x1, int y1, double ang, double len, int col, t_data *d);
 // 	}
 // 	mlx_put_image_to_window(d->mlx, d->win, d->img.img, 0, 0);
 
-// }int	map_draw_borders(t_data *d)
+// }int	map_draw_borders(struct s_data *d)
 // {	
 // 	int	i1 = 0;
 // 	int	i2 = 0;
@@ -365,7 +393,7 @@ int			put_vector_br(int x1, int y1, double ang, double len, int col, t_data *d);
 // 	return (0);
 // }
 
-// int	map_draw_borders(t_data *d)
+// int	map_draw_borders(struct s_data *d)
 // {	
 // 	int	i1 = 0;
 // 	int	i2 = 0;
@@ -396,7 +424,7 @@ int			put_vector_br(int x1, int y1, double ang, double len, int col, t_data *d);
 // 	return (0);
 // }
 
-// int	put_vector(int x1, int y1, double ang, double len, int col, t_data *d)
+// int	put_vector(int x1, int y1, double ang, double len, int col, struct s_data *d)
 // {
 // 	int x2;
 // 	int y2;
@@ -413,4 +441,451 @@ int			put_vector_br(int x1, int y1, double ang, double len, int col, t_data *d);
 // 	}
 // 	// put_line(x1, y1, x2, y2, col, d);
 // 	return (0);
+// }
+
+// int	map_draw_borders(struct s_data *d)
+// {	
+// 	int	i1 = 0;
+// 	int	i2 = 0;
+// 	int	startx = 0;
+// 	int	starty = 0;
+// 	int	endx = 0;
+// 	int	endy = 0;
+
+
+// 	d->map.unx = d->img.rx / (d->map.size_x + 20);
+// 	d->map.uny = d->map.unx;
+// 	d->map.gapx =  d->map.unx;
+// 	d->map.gapy =  d->map.gapx;
+// 	d->map.iso = 2;
+// 	d->map.shiftx = 2 * d->map.unx;
+// 	d->map.shifty = 1;
+// 	while (i1 < d->map.size_y)
+// 	{
+// 		while (i2 < d->map.size_x * 1)
+// 		{
+// 			startx = d->map.gapx + d->map.unx * i2 + d->map.shiftx * i1;
+// 			starty = d->map.gapy + d->map.uny * i1;
+// 			endx = d->map.gapx + d->map.unx * (i2 + 1) + d->map.shiftx * i1;
+// 			endy = (d->map.gapy + d->map.uny * (i1 + 1));
+
+// 			put_line(startx , starty, endx , endy, 0x00FF0000, d); // Y lines
+// 			// put_line(d->map.gapx + d->map.unx * i2 + d->map.shiftx * i1 , d->map.gapy + d->map.uny * i1, d->map.gapx + d->map.unx * (i2 + 1) + d->map.shiftx * i1 , (d->map.gapy + d->map.uny * (i1 + 1)), 0x00FF0000, d); // Y2 lines
+// 			// put_line(d->map.gapx + d->map.unx * i2 + d->map.shiftx * i1 , d->map.gapy + d->map.uny * i1, d->map.gapx + d->map.unx * i2 + d->map.shiftx * i1 + d->map.shiftx * i1 , (d->map.gapy + d->map.uny * (i1 + 1)), 0x035F3000, d); // X2 lines
+// 			i2+= 1;
+// 		}
+// 		i2 = 0;
+// 		i1+= 1;
+// 	}
+// 	return (0);
+// }
+
+// int	put_vector_br(int x1, int y1, double ang, double len, int col, struct s_data *d)
+// {
+// 	int x2;
+// 	int y2;
+
+// 	x2 = x1 + round(len * cos(ang));
+// 	y2 = y1 + round(len * sin(ang));
+	
+// 	put_line(x1, y1, x2, y2, col, d);
+// 	return (0);
+// }
+
+// int	draw_cube(struct s_data *d)
+// {	
+// 	struct s_v	v;
+	
+// 	d->v.col = 0x00FF0000;	
+// 	d->v.start.x = 100;
+// 	d->v.start.y = 100;
+// 	d->v.end.x = 200;
+// 	d->v.end.y = 100;
+// 	put_vector(&d->v, d);
+// 	d->v.start.x = 100;
+// 	d->v.start.y = 100;
+// 	d->v.end.x = 100;
+// 	d->v.end.y = 200;
+// 	put_vector(&d->v, d);
+// 	d->v.start.x = 100;
+// 	d->v.start.y = 200;
+// 	d->v.end.x = 200;
+// 	d->v.end.y = 200;
+// 	put_vector(&d->v, d);
+// 	d->v.start.x = 200;
+// 	d->v.start.y = 100;
+// 	d->v.end.x = 200;
+// 	d->v.end.y = 200;
+// 	put_vector(&d->v, d);
+// 	// put_line(v.start.x, p.y, p.z, p.y2, p.col, d);
+// 	return (0);
+// }
+		// d->v.ang * 0.01745
+
+// int	grid(struct s_data *d)
+// {	
+// 	struct s_v	v;
+// 	int	i = 0;
+	
+// 	d->v.col = 0x00FF0000;	
+// 	d->v.start.x = 400;
+// 	d->v.start.y = 400;
+// 	d->v.len = 50;
+// 	d->v.ang = 30;
+// 	put_vector_ang(d);
+// 	while (i++ < d->map.size_y)
+// 	{
+// 		d->v.start.x = d->v.end.x;
+// 		d->v.start.y = d->v.end.y;
+// 		if (i%2 > 0)
+// 			d->v.ang += 299;
+// 		else
+// 		{
+// 			d->v.ang -= 299;
+// 		}
+		
+// 		d->v.col += 500;
+// 		put_vector_ang(d);
+// 	}
+// 	return (0);
+// }
+// int	put_vector(struct s_v *v, struct s_data *d)
+// {
+// 	order_int(&v->start.x, &v->start.y, &v->end.x, &v->end.y);
+// 	bresenham_(v->start.x, v->start.y, v->end.x, v->end.y, v->col, d);
+// 	mlx_put_image_to_window(d->mlx, d->win, d->img.img, 0, 0);
+// 	return (0);
+// }
+
+
+// int	draw_cube(struct s_data *d)
+// {	
+// d->v.end.x = 200;
+// d->v.end.y = 100;
+// 	put_line(100, 100, 500, 100, 0x00FF0000, d);
+// 	put_line(100, 500, 500, 500, 0x00FF0000, d);
+// 	put_line(500, 100, 500, 500, 0x00FF0000, d);
+// 	put_line(100, 100, 100, 500, 0x00FF0000, d);
+// 	put_line(100, 100, 500, 500, 0x00FF0000, d);
+// 	put_line(500, 100, 100, 500, 0x00FF0000, d);
+// 	put_line(200, 100, 100, 200, 0x00FF0000, d);
+// 	put_line(100, 100, 400, 200, 0x00FF0000, d);
+	// put_line(v.start.x, p.y, p.z, p.y2, p.col, d);
+// 	mlx_put_image_to_window(d->mlx, d->win, d->img.img, 0, 0);
+// 	return (0);
+// }
+
+
+// int	map_draw_borders(struct s_data *d)
+// {	
+// 	int	i1 = 1;
+// 	int	i2 = 1;
+// 	int	startx = 0;
+// 	int	starty = 0;
+// 	int	end__x = 0;
+// 	int	end__y = 0;
+
+
+// 	d->map.unx = d->img.rx / (d->map.size_x * 3);
+// 	d->map.uny = d->map.unx - 25;
+// 	d->map.gapx =  d->map.unx * 15;
+// 	d->map.gapy =  d->map.uny * 2;
+// 	d->map.shiftx = round(-10);
+// 	d->map.shifty = round(1);
+// 	startx = d->map.gapx;
+// 	starty = d->map.gapy;
+// 	end__x = startx + d->map.unx;
+// 	end__y = starty;// + d->map.uny;
+// 	// put_line(startx , starty, end__x , end__y, 0x035F3000, d);
+// 	while (i1 <= d->map.size_y) //Y incr)
+// 	{
+// 		while (i2 <= d->map.size_x) //X incr
+// 		{
+// 			startx += d->map.unx;// + d->map.shiftx * i1;
+// 			end__x = startx + d->map.unx;
+// 			put_line(startx , starty, end__x , end__y, 0x00F50000, d); // X lines
+// 			put_line(startx , starty, startx + d->map.shiftx, starty + d->map.uny * d->map.shifty, 0x011F8000, d); // Y lines
+// 			i2 += 1; 
+// 		}
+// 		starty += d->map.uny ;
+// 		end__y = starty;
+// 		startx = d->map.gapx + d->map.shiftx * i1;
+// 		i2 = 1;
+// 		i1+= 1;
+// 	}
+// 	return (0);
+// }
+// int	put_object(t_data *d)
+// {
+// 	int i1 = 0;
+// 	int i2 = 0;
+// 	d->map.un = d->img.rx / (d->map.size_x + 4);
+	
+// 	// while (i < 10)
+// 	// {
+// 	// 	put_line()
+// 	// 	i++;
+// 	// }
+
+	// put_vector_br(d->v.x1, d->v.x1, d->v.ang, d->v.len,  d->v.col, d);
+	// while (i1 < d->map.size_y)
+	// {
+	// 	while (i2 < d->map.size_x)
+	// 		{
+	// 			put_vector(200, 200, 75, 300, 0x035F3000, d);
+	// 			i2++;
+	// 		}
+	// 		printf("\n");
+	// 		i2 = 0;
+	// 		i1++;
+	// }
+// 	mlx_put_image_to_window(d->mlx, d->win, d->img.img, 0, 0);
+// 	return (0);
+// }
+
+
+// int	put_vector(struct s_v *v, struct s_data *d)
+// {
+// 	// struct s_v line;
+	
+// 	int	x1 = v->start.x;
+// 	int	x2 = v->end.x * 1;
+// 	int	y1 = 0;
+// 	int	y2 = 0;
+// 	int	z1 = v->start.y;
+// 	int	z2 = v->end.y;
+
+// 	// y1 = x1 + round(len * cos(ang));
+// 	// y2 = y1 + round(len * sin(ang));
+	
+// 	put_line(x1, z1, x2, z2, v->col, d);
+// 	// mlx_put_image_to_window(d->mlx, d->win, d->img.img, 0, 0);
+// 	return (0);
+// }
+
+// int	grid(struct s_data *d)
+// {	
+// 	int	i1 = 0;
+// 	int	i2 = 0;
+// 	int	a = 45;
+// 	double c = 0.0174533;
+// 	double iso = 1;
+	
+// 	d->v.orig.x = d->img.rx / 3;
+// 	d->v.orig.y = d->img.ry / 3;
+// 	d->v.start.x = d->v.orig.x;
+// 	d->v.start.y = d->v.orig.y;
+// 	d->v.col = 0x00FF0000;	
+// 	d->v.len = 20;
+// 	while (i1++ < d->map.size_y)
+// 	{
+// 		while (i2++ < d->map.size_x)
+// 		{
+// 			v_end_calc(&d->v, a);
+// 			put_line(d->v.start.x, d->v.start.y, d->v.end.x, d->v.end.y, d->v.col, d);
+// 			v_end_calc(&d->v, a + 90);
+// 			put_line(d->v.start.x, d->v.start.y, d->v.end.x, d->v.end.y, d->v.col, d);
+// 			v_end_calc(&d->v, a);
+// 			d->v.start.x = d->v.end.x + 5;
+// 			d->v.start.y = d->v.end.y + 5;
+// 		}
+// 		d->v.start.x = round(d->v.orig.x - i1 * (d->v.len) * cos((a + 180) * c));
+// 		d->v.start.y = round(d->v.orig.y + i1 * (d->v.len) * iso * sin((a + 180) * c));
+// 		i2 = 0;
+// 	}
+// 	return (0);
+// }
+
+
+// int	values(struct s_data *d)
+// {
+// 	int	**numeric;
+// 	int	i1 = 0;
+// 	int	i2 = 0;
+// 	int	c = 0;
+
+// 	d->map.current = d->map.lhead;
+// 	numeric = malloc(sizeof(int *) * d->map.size_y);
+// 	if (!numeric)
+// 		return (-1);
+// 	while (i1 < d->map.size_y)
+// 	{
+// 		numeric[i1] = malloc(sizeof(int) * d->map.size_x);
+// 		if (!numeric[i1])
+// 			return (-1);
+// 		while (i2 < d->map.size_x)
+// 		{
+// 			// printf("%c ", d->map.current->line[c]);
+// 			numeric[i1][i2] = val(&d->map.current->line[c]);
+// 			while (ft_isdigit(d->map.current->line[c]) || d->map.current->line[c] == '-')
+// 				c++;
+// 			while (d->map.current->line[c] == ' ')
+// 				c++;
+// 			i2++;
+// 		}
+// 		// printf("\n");
+// 		d->map.current = d->map.current->next;
+// 		i2 = 0;
+// 		c = 0;
+// 		i1++;
+// 	}
+// 	d->map.array = numeric;
+// 	return (0);
+// }
+
+// int	values(struct s_data *d)
+// {
+// 	int	**numeric;
+// 	int	i1 = 0;
+// 	int	i2 = 0;
+// 	int	i3 = 0;
+// 	int	c = 0;
+	
+// 	d->map.size_z = 3;
+// 	d->map.current = d->map.lhead;
+// 	d->map.l = malloc(sizeof(int**) * d->map.size_x);
+// 	while (i1 < d->map.size_x)
+// 	{
+// 		d->map.l[i1] = malloc(sizeof(int*) * d->map.size_y);
+// 		while (i2 < d->map.size_y)
+// 		{
+// 			while (i3 < d->map.size_z)
+// 			{
+// 				d->map.l[i3] = malloc(sizeof(int) * d->map.size_z);
+// 				// printf("%c ", d->map.current->line[c]);
+// 				d->map.l[i1][i2][i3] = val(&d->map.current->line[c]);
+// 				while (ft_isdigit(d->map.current->line[c]) || d->map.current->line[c] == '-')
+// 					c++;
+// 				while (d->map.current->line[c] == ' ')
+// 					c++;
+// 				i3++;
+// 			}
+// 				i2++;
+// 		}
+// 		// printf("\n");
+// 		d->map.current = d->map.current->next;
+// 		i2 = 0;
+// 		c = 0;
+// 		i1++;
+// 	}
+
+// 	d->map.array = numeric;
+// 	return (0);
+// }
+
+// int	grid(struct s_data *d)
+// {	
+// 	int	i1 = 0;
+// 	int	i2 = 0;
+// 	int	a = 45;
+// 	int fa = -15;
+// 	int ha = 15;
+// 	double c = 0.0174533;
+// 	double iso = 1;
+	
+// 	d->v.orig.x = d->img.rx / 3;
+// 	d->v.orig.y = d->img.ry / 3;
+// 	d->v.start.x = d->v.orig.x;
+// 	d->v.start.y = d->v.orig.y;
+// 	d->v.col = 0x00FF0000;	
+// 	d->v.len = 20;
+// 	while (i1 < d->map.size_y)
+// 	{
+// 		while (i2 < d->map.size_x)
+// 		{
+// 			printf("%d ,", d->map.array[i1][i2]);
+// 			v_end_calc(&d->v, a, d->v.len);
+// 			put_line(d->v.start.x, d->v.start.y, d->v.end.x, d->v.end.y, d->v.col, d);
+// 			v_end_calc(&d->v, a + 90 - fa * 2, d->v.len);
+// 			put_line(d->v.start.x, d->v.start.y, d->v.end.x, d->v.end.y, d->v.col, d);
+// 			v_end_calc(&d->v, a, d->v.len);
+// 			d->v.start.x = d->v.end.x + 10;
+// 			d->v.start.y = d->v.end.y + 10;
+// 			i2++;
+// 		}
+// 		fa += 11;
+// 		d->v.start.x = round(d->v.orig.x - i1 * d->v.len * cos((a + fa) * c));
+// 		d->v.start.y = round(d->v.orig.y + i1 * d->v.len * iso * sin((a + fa) * c));
+// 		i2 = 0;
+// 		i1++;
+// 		printf("\n");
+// 	}
+// 	return (0);
+// }
+
+// int	grid(struct s_data *d)
+// {	
+// 	int	i1 = 0;
+// 	int	i2 = 0;
+// 	int	a = 35;
+// 	int fa = -15;
+// 	int ha = 150;
+// 	double iso = 1;
+	
+// 	d->v.orig.x = d->img.rx / 3;
+// 	d->v.orig.y = d->img.ry / 3;
+// 	d->v.start.x = d->v.orig.x;
+// 	d->v.start.y = d->v.orig.y;
+// 	d->v.col = 0x00FF0000;	
+// 	d->v.len = 20;
+// 	while (i1 < d->map.size_y)
+// 	{
+// 		while (i2 < d->map.size_x)
+// 		{
+// 			printf("%d ,", d->map.array[i1][i2]);
+// 			v_end_calc(&d->v, a, d->v.len);
+// 			// apply_z
+// 			put_line(d->v.start.x, d->v.start.y, d->v.end.x, d->v.end.y, d->v.col, d);
+// 			v_end_calc(&d->v, a + 90 - fa, d->v.len);
+// 			put_line(d->v.start.x, d->v.start.y, d->v.end.x, d->v.end.y, d->v.col, d);
+// 			v_end_calc(&d->v, a, d->v.len);
+// 			d->v.start.x = d->v.end.x + 10;
+// 			d->v.start.y = d->v.end.y + 10;
+// 			i2++;
+// 		}
+// 		fa += 11;
+// 		d->v.start.x = round(d->v.orig.x - i1 * d->v.len * cos((a + fa) * CONST));
+// 		d->v.start.y = round(d->v.orig.y + i1 * d->v.len * iso * sin((a + fa) * CONST));
+// 		i2 = 0;
+// 		i1++;
+// 		printf("\n");
+// 	}
+// 	return (0);
+// }
+
+// struct s_node	*vlist(struct s_data *d)
+// {
+// 	struct s_node	*vect;
+// 	int	i1 = 0;
+// 	int	i2 = 0;
+// 	int	i3 = 0;
+// 	int	in = 0;
+// 	int	c = 0;
+// 	// int	size = d->map.size_x * d->map.size_y;
+	
+// 	vect = malloc(sizeof(vect) * d->map.size_x * d->map.size_y + 1);
+// 	if (!vect)
+// 		return (NULL);
+// 	d->map.current = d->map.lhead;
+// 	while (i1 < d->map.size_x * d->map.size_y)
+// 	{
+// 		while (i2 < d->map.size_x)
+// 		{
+// 			vect[i1].x = i1;
+// 			vect[i1].y = i3;
+// 			vect[i1].z = val(&d->map.current->line[c]);
+// 			while (ft_isdigit(d->map.current->line[c]) || d->map.current->line[c] == '-')
+// 				c++;
+// 			while (d->map.current->line[c] == ' ')
+// 				c++;
+// 			i1++;
+// 			i2++;
+// 		}
+// 		d->map.current = d->map.current->next;
+// 		i3++;
+// 		c = 0;
+// 		i2 = 0;
+// 	}
+// 	d->vs = vect;
+// 	return (vect);
 // }

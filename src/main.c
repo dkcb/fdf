@@ -6,18 +6,23 @@
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/21 18:56:32 by dkocob        #+#    #+#                 */
-/*   Updated: 2021/11/28 22:35:47 by dkocob        ########   odam.nl         */
+/*   Updated: 2021/12/11 20:16:02 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 
-
 int	main(int argc, char **argv)
 {
-	int		fd;
-	t_data	d;
+	int				fd;
+	struct s_data	d;
 
+	// d = malloc(sizeof(struct s_data));
+	// if(!d)
+	// 	return ((void *)0);
+
+	d.map.lhead = (void *)0;
+	d.map.un = 50;
 	// if (!((fd = open(argv[1], O_RDONLY)) >= 0))
 	// if (!((fd = open("./test_maps/20-60.fdf", O_RDONLY)) >= 0))
 	// if (!((fd = open("./test_maps/julia.fdf", O_RDONLY)) >= 0))

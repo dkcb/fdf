@@ -6,7 +6,7 @@
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/21 19:00:06 by dkocob        #+#    #+#                 */
-/*   Updated: 2021/11/27 18:57:28 by dkocob        ########   odam.nl         */
+/*   Updated: 2021/12/11 20:26:32 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,55 +38,45 @@ size_t	c_cnt(char *s, char c)
 	return (i2);
 }
 
-int	values(t_data *d)
+struct s_node	*vlist(struct s_data *d)
 {
-	int	**numeric;
 	int	i1 = 0;
 	int	i2 = 0;
+	int	i3 = 0;
 	int	c = 0;
-
+	
+	d->vs = malloc(sizeof(struct s_node) * d->map.size_x * d->map.size_y + 1);
+	if (!d->vs)
+		return (NULL);
 	d->map.current = d->map.lhead;
-	numeric = malloc(sizeof(int *) * d->map.size_y);
-	while (i1 < d->map.size_y)
+	while (i1 < d->map.size_x * d->map.size_y)
 	{
-		numeric[i1] = malloc(sizeof(int) * d->map.size_x);
 		while (i2 < d->map.size_x)
 		{
-			numeric[i1][i2] = (int)val(&d->map.current->line[c]);
+			d->vs[i1].x = d->map.un * i2;
+			d->vs[i1].y = d->map.un * i3;
+			d->vs[i1].z = val(&d->map.current->line[c]);
 			while (ft_isdigit(d->map.current->line[c]) || d->map.current->line[c] == '-')
 				c++;
 			while (d->map.current->line[c] == ' ')
 				c++;
+			i1++;
 			i2++;
 		}
 		d->map.current = d->map.current->next;
-		i2 = 0;
+		i3++;
 		c = 0;
-		i1++;
+		i2 = 0;
 	}
-	
-	i1 = 0;
-	i2 = 0;
-	while (i1 < d->map.size_y)
-	{
-		while (i2 < d->map.size_x)
-			{
-				printf("%d ,", numeric[i1][i2]);
-				i2++;
-			}
-			printf("\n");
-			i2 = 0;
-			i1++;
-	}
-	return (0);
+	return (d->vs);
 }
 
-int	get_arg_stack(t_data *d, char **line)
+int	get_arg_stack(struct s_data *d, char **line)
 {
-	t_line	*new;
+	struct s_line	*new;
 
-	new = malloc(sizeof(t_line) * 1);
-	if (!line[0] || !new)
+	new = malloc(sizeof(new));
+	if (!line || !new || !line[0])
 		return (-1);
 	new->line = *line;
 	if (!d->map.lhead)
@@ -100,37 +90,34 @@ int	get_arg_stack(t_data *d, char **line)
 	return (0);
 }
 
-int	map_init(int fd, t_data *d)
+void	draw_vector_struct(struct s_data *d)
 {
-	int		ret;
+	int i = 0;
+	while (i < d->map.size_x * d->map.size_y)
+	{
+		// printf (" |%d", d->vs[i].x);
+		// printf ("|%d|", d->vs[i].y);
+		printf ("%d|, ", d->vs[i].z);
+		if ((i + 1) % (d->map.size_x) == 0)
+			printf("\n");
+		i++;
+	}
+}
+
+int	map_init(int fd, struct s_data *d)
+{
 	char	*line;
 	int		i = 0;
 	
-	d->map.size_y = 0;
-	while (1)
+	while (get_next_line(fd, &line))
 	{
-		ret = get_next_line(fd, &line);
-		// printf("Fline:%s, ret:%d\n", line, ret);
-		// d->map.size_y++;
 		get_arg_stack(d, &line);
-		// printf("current:%s\n", d->map.current->line);
-		if (ret <= 0)
-			break ;
 		i++;
-	
 	}
-		d->map.size_y = i;
-		d->map.size_x = c_cnt(d->map.lhead->line, ' ');
-		// printf("sizeY:%d\n", d->map.size_y);
-		// printf("sizeX:%d\n", d->map.size_x);
+	d->map.size_y = i;
+	d->map.size_x = c_cnt(d->map.lhead->line, ' ');
 	d->map.current = d->map.lhead;
-	while (i > -1)
-	{
-		// printf("Sline:%s\n", d->map.current->line);
-		d->map.current = d->map.current->next;
-
-		i--;
-	}
-	values(d);
+	vlist(d);
+	i = 0;
 	return (1);
 }

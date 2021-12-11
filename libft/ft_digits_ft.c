@@ -6,7 +6,7 @@
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/21 20:46:31 by dkocob        #+#    #+#                 */
-/*   Updated: 2021/11/27 18:56:49 by dkocob        ########   odam.nl         */
+/*   Updated: 2021/12/04 19:12:33 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,25 +19,30 @@ int	ft_isdigit(char c)
 	return (0);
 }
 
-long	val(char *s)
+int	val(char *s)
 {
-	int			i;
-	long		pwr;
-	long		res;
-	long		neg;
+	int		i;
+	int		pwr;
+	int		res;
+	int		neg;
 
 	neg = 1;
 	i = 0;
 	res = 0;
 	pwr = 1;
-	while (s[i] == '-')
+	while (s[i] && s[i] == '-')
 	{
 		neg = -1;
+		// printf(".|%c", s[i]);
 		i++;
 	}
 	while (s[i] && ft_isdigit(s[i]))
+	{
+		// printf("%c|.", s[i]);
 		i++;
+	}
 	i--;
+	// printf("\n");
 	while (s[i] && ft_isdigit(s[i]))
 	{
 		res = res + (s[i] - '0') * pwr;
