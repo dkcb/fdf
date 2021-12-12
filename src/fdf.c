@@ -299,6 +299,8 @@ void	draw_map(struct s_data *d)
 	{
 		put_line(s.x, s.y, d->vs[i].x, d->vs[i].y, 0x00FF0000, d);
 		put_line(s.x, s.y, s.x, d->vs[i + d->map.size_x].y, 0x00FF0000, d);
+		if ((i + 1) % (d->map.size_x) == 0)
+			put_line(d->vs[i].x, s.y, d->vs[i].x, d->vs[i + d->map.size_x].y, 0x00FF0000, d);
 		s.x = d->vs[i].x;
 		s.y = d->vs[i].y;
 		if ((i + 1) % (d->map.size_x) == 0)
