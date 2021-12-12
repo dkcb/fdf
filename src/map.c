@@ -6,7 +6,7 @@
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/21 19:00:06 by dkocob        #+#    #+#                 */
-/*   Updated: 2021/12/11 20:26:32 by dkocob        ########   odam.nl         */
+/*   Updated: 2021/12/12 21:58:36 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ struct s_node	*vlist(struct s_data *d)
 	int	i3 = 0;
 	int	c = 0;
 	
-	d->vs = malloc(sizeof(struct s_node) * d->map.size_x * d->map.size_y + 1);
+	d->vs = malloc(sizeof(struct s_node) * d->map.size_x * d->map.size_y);
 	if (!d->vs)
 		return (NULL);
 	d->map.current = d->map.lhead;
