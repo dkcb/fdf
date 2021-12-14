@@ -239,75 +239,76 @@ int	draw_cube(struct s_cube cube, struct s_data *d)
 	return (0);
 }
 
-int	grid(struct s_data *d)
-{	
-	int	i1 = 0;
-	int	i2 = 0;
-	int	a = 35;
-	int fa = -15;
-	int ha = 150;
-	double iso = 1;
-	
-	d->v.orig.x = d->img.rx / 3;
-	d->v.orig.y = d->img.ry / 3;
-	d->v.start.x = d->v.orig.x;
-	d->v.start.y = d->v.orig.y;
-	d->v.col = 0x00FF0000;	
-	d->v.len = 20;
-	while (i1 < d->map.size_y)
-	{
-		while (i2 < d->map.size_x)
-		{
-			// printf("%d ,", d->map.array[i1][i2]);
-			v_end_calc(&d->v, a, d->v.len);
-			// apply_z
-			put_line(d->v.start.x, d->v.start.y, d->v.end.x, d->v.end.y, d->v.col, d);
-			v_end_calc(&d->v, a + 90 - fa, d->v.len);
-			put_line(d->v.start.x, d->v.start.y, d->v.end.x, d->v.end.y, d->v.col, d);
-			v_end_calc(&d->v, a, d->v.len);
-			d->v.start.x = d->v.end.x + 10;
-			d->v.start.y = d->v.end.y + 10;
-			i2++;
-		}
-		fa += 11;
-		d->v.start.x = round(d->v.orig.x - i1 * d->v.len * cos((a + fa) * CONST));
-		d->v.start.y = round(d->v.orig.y + i1 * d->v.len * iso * sin((a + fa) * CONST));
-		i2 = 0;
-		i1++;
-		printf("\n");
-	}
-	return (0);
-}
-
-void	draw_map(struct s_data *d)
+void	map_rotate(struct s_data *d)
 {
-	struct s_node s;
-	struct s_node e;
+	int	i = 0;
+	int	ang = 45;
+	int	len = d->map.un;
 
-	int i = 1;
 
-	// d->map.un = 300;
-	s.x = 0;
-	s.y = 0;
-	e.x = d->vs[i].x;
-	e.y = d->vs[i].y;
-	// e.x = 1;
-	// e.y = 1;
-	// s.x = d->vs[i].x;
-	// s.y = d->vs[i].x;
+	d->vs[0].x = d->map.start.x;
+	d->vs[0].y = d->map.start.y;
+	// d->vs[i + 1].x = round(d->vs[i].x + len * 1 * cos(ang * CONST));
+	// d->vs[i + 1].y = round(d->vs[i].y + len * 1 * sin(ang * CONST));
+	printf ("y0:%d\n", d->vs[i].y);
 	while (i < d->map.size_x * d->map.size_y)
 	{
-		put_line(s.x, s.y, d->vs[i].x, d->vs[i].y, 0x00FF0000, d);
-		put_line(s.x, s.y, s.x, d->vs[i + d->map.size_x].y, 0x00FF0000, d);
-		if ((i + 1) % (d->map.size_x) == 0)
-			put_line(d->vs[i].x, s.y, d->vs[i].x, d->vs[i + d->map.size_x].y, 0x00FF0000, d);
-		s.x = d->vs[i].x;
-		s.y = d->vs[i].y;
-		if ((i + 1) % (d->map.size_x) == 0)
+		if (i > 0 && i % (d->map.size_x) == 0)
 		{
-			s.x = d->vs[i + 1].x;
-			// d;
+		// 	printf ("y1:%d\n", d->vs[i].y);
+			d->vs[i].x = round(d->vs[i - d->map.size_x].x + len * 1 * cos((ang + 90) * CONST));
+			d->vs[i].y = round(d->vs[i - d->map.size_x].y + len * 1 * sin((ang + 90) * CONST));
+			printf ("i:%d, (i + 1)/(d->map.size_x):%d m+x:%d\n", i, (i) % (d->map.size_x), i + d->map.size_x);
+		// 	// i++;
 		}
+		// else
+		// {
+		// 	d->vs[i + 1].x = round(d->vs[i].x + len * 1 * cos(ang * CONST));
+		// 	d->vs[i + 1].y = round(d->vs[i].y + len * 1 * sin(ang * CONST));
+		// 	printf ("y2:%d\n", d->vs[i].y);
+		// }
+		
+		d->vs[i + 1].x = round(d->vs[i].x + len * 1 * cos(ang * CONST));
+		d->vs[i + 1].y = round(d->vs[i].y + len * 1 * sin(ang * CONST));
+		// printf ("y3:%d\n", d->vs[i].y);
+		i++;
+	}
+}
+
+void	map_apply_z(struct s_data *d)
+{
+	int	i = 0;
+	float	ang =  35.264;
+	int	len = d->map.un;
+	ang = 35;
+
+	d->vs[0].x = d->map.start.x;
+	d->vs[0].y = d->map.start.y;
+	printf ("y0:%d\n", d->vs[i].y);
+	while (i < d->map.size_x * d->map.size_y)
+	{
+		if (i > 0 && i % (d->map.size_x) == 0)
+		{
+			d->vs[i].x = round(d->vs[i - d->map.size_x].x + len * 3 * cos((ang + d->vs[i].z * 15 + 90) * CONST));
+			d->vs[i].y = round(d->vs[i - d->map.size_x].y + len * 1 * sin((ang + d->vs[i].z * 15 + 90) * CONST));
+			printf ("i:%d, (i + 1)/(d->map.size_x):%d m+x:%d\n", i, (i) % (d->map.size_x), i + d->map.size_x);
+		}
+		d->vs[i + 1].x = round(d->vs[i].x + len * 3 * cos((ang + d->vs[i].z * 8) * CONST));
+		d->vs[i + 1].y = round(d->vs[i].y + len * 1 * sin((ang + d->vs[i].z * 8) * CONST));
+		i++;
+	}
+}
+
+void	map_draw(struct s_data *d)
+{
+	int	i = 0;
+	
+	while (i < d->map.size_x * d->map.size_y)
+	{
+		if (i % (d->map.size_x) != d->map.size_x - 1)
+			put_line(d->vs[i].x, d->vs[i].y, d->vs[i + 1].x, d->vs[i + 1].y, 0x00FF0000, d); // x
+		if (i > d->map.size_x - 1)
+			put_line(d->vs[i].x, d->vs[i].y, d->vs[i - d->map.size_x].x, d->vs[i - d->map.size_x].y, 0x00F08000, d); // y
 		i++;
 	}
 }
@@ -315,22 +316,20 @@ void	draw_map(struct s_data *d)
 int	window(struct s_data *d)
 {
 	struct s_cube c;
-	// t_node n[] = {1, 1, 1};
 	
 	d->img.rx = X_REZ;
 	d->img.ry = Y_REZ;
 	d->p.col = 0x00FF0000;
-	// d->p.x = 0;
-	// d->p.y = 0;
+
 	d->mlx = mlx_init();
 	d->img.img = mlx_new_image(d->mlx, d->img.rx, d->img.ry);
 	d->img.addr = mlx_get_data_addr(d->img.img, &d->img.bits_per_pixel, &d->img.line_length, &d->img.endian);
 	d->win = mlx_new_window(d->mlx, d->img.rx, d->img.ry, "fdf");
 	draw_cube(c, d);
 	draw_vector_struct(d);
-	draw_map(d);
-	// grid(d);
-	// map_draw_borders(d);
+	map_apply_z(d);
+	// map_rotate(d);
+	map_draw(d);
 	
 	hooks(d);
 	mlx_put_image_to_window(d->mlx, d->win, d->img.img, 0, 0);

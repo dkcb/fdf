@@ -6,7 +6,7 @@
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/21 19:00:06 by dkocob        #+#    #+#                 */
-/*   Updated: 2021/12/12 21:58:36 by dkocob        ########   odam.nl         */
+/*   Updated: 2021/12/14 18:27:33 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,38 @@ size_t	c_cnt(char *s, char c)
 	return (i2);
 }
 
+// struct s_node	*vlist(struct s_data *d)
+// {
+// 	int	i1 = 0;
+// 	int	i2 = 0;
+// 	int	i3 = 0;
+// 	int	c = 0;
+	
+// 	d->vs = malloc(sizeof(struct s_node) * d->map.size_x * d->map.size_y);
+// 	if (!d->vs)
+// 		return (NULL);
+// 	d->map.current = d->map.lhead;
+// 	while (i1 < d->map.size_x * d->map.size_y)
+// 	{
+// 		while (i2 < d->map.size_x)
+// 		{
+// 			d->vs[i1].x = d->map.un * i2;
+// 			d->vs[i1].y = d->map.un * i3;
+// 			d->vs[i1].z = val(&d->map.current->line[c]);
+// 			while (ft_isdigit(d->map.current->line[c]) || d->map.current->line[c] == '-')
+// 				c++;
+// 			while (d->map.current->line[c] == ' ')
+// 				c++;
+// 			i1++;
+// 			i2++;
+// 		}
+// 		d->map.current = d->map.current->next;
+// 		i3++;
+// 		c = 0;
+// 		i2 = 0;
+// 	}
+// 	return (d->vs);
+// }
 struct s_node	*vlist(struct s_data *d)
 {
 	int	i1 = 0;
@@ -45,7 +77,7 @@ struct s_node	*vlist(struct s_data *d)
 	int	i3 = 0;
 	int	c = 0;
 	
-	d->vs = malloc(sizeof(struct s_node) * d->map.size_x * d->map.size_y);
+	d->vs = malloc(sizeof(struct s_node) * d->map.size_x * d->map.size_y + 3);
 	if (!d->vs)
 		return (NULL);
 	d->map.current = d->map.lhead;
@@ -53,8 +85,8 @@ struct s_node	*vlist(struct s_data *d)
 	{
 		while (i2 < d->map.size_x)
 		{
-			d->vs[i1].x = d->map.un * i2;
-			d->vs[i1].y = d->map.un * i3;
+			d->vs[i1].x = -100;
+			d->vs[i1].y = -100;
 			d->vs[i1].z = val(&d->map.current->line[c]);
 			while (ft_isdigit(d->map.current->line[c]) || d->map.current->line[c] == '-')
 				c++;
@@ -68,6 +100,7 @@ struct s_node	*vlist(struct s_data *d)
 		c = 0;
 		i2 = 0;
 	}
+	// d->vs[i1] = NULL;
 	return (d->vs);
 }
 

@@ -6,7 +6,7 @@
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/21 19:08:11 by dkocob        #+#    #+#                 */
-/*   Updated: 2021/12/12 22:24:44 by dkocob        ########   odam.nl         */
+/*   Updated: 2021/12/14 21:15:24 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ struct	s_map {
 	// int				shifty;
 	// int				iso;
 	// int				***l;
+	struct s_node	start;
 	struct s_node	*v;
 	struct s_line	*lhead;
 	struct s_line	*current;
@@ -889,3 +890,64 @@ void		draw_vector_struct(struct s_data *d);
 // 	d->vs = vect;
 // 	return (vect);
 // }
+
+// int	grid(struct s_data *d)
+// {	
+// 	int	i1 = 0;
+// 	int	i2 = 0;
+// 	int	a = 35;
+// 	int fa = -15;
+// 	int ha = 150;
+// 	double iso = 1;
+	
+// 	d->v.orig.x = d->img.rx / 3;
+// 	d->v.orig.y = d->img.ry / 3;
+// 	d->v.start.x = d->v.orig.x;
+// 	d->v.start.y = d->v.orig.y;
+// 	d->v.col = 0x00FF0000;	
+// 	d->v.len = 20;
+// 	while (i1 < d->map.size_y)
+// 	{
+// 		while (i2 < d->map.size_x)
+// 		{
+// 			// printf("%d ,", d->map.array[i1][i2]);
+// 			v_end_calc(&d->v, a, d->v.len);
+// 			// apply_z
+// 			put_line(d->v.start.x, d->v.start.y, d->v.end.x, d->v.end.y, d->v.col, d);
+// 			v_end_calc(&d->v, a + 90 - fa, d->v.len);
+// 			put_line(d->v.start.x, d->v.start.y, d->v.end.x, d->v.end.y, d->v.col, d);
+// 			v_end_calc(&d->v, a, d->v.len);
+// 			d->v.start.x = d->v.end.x + 10;
+// 			d->v.start.y = d->v.end.y + 10;
+// 			i2++;
+// 		}
+// 		fa += 11;
+// 		d->v.start.x = round(d->v.orig.x - i1 * d->v.len * cos((a + fa) * CONST));
+// 		d->v.start.y = round(d->v.orig.y + i1 * d->v.len * iso * sin((a + fa) * CONST));
+// 		i2 = 0;
+// 		i1++;
+// 		printf("\n");
+// 	}
+// 	return (0);
+// }
+
+// t_node n[] = {1, 1, 1};
+		// float	c = cos(ang * CONST);
+		// float	s = sin(ang * CONST);
+		// d->vs[i + 1].x = round(d->vs[0].x + len * 1 * cos(ang * CONST));
+		// d->vs[i + 1].y = round(d->vs[0].y + len * 1 * sin(ang * CONST));
+		// else
+		// {
+		// 	// if (i == 0 || i % (d->map.size_x) == 1)
+		// 	// {
+		// 	// 	d->vs[i].x = round(d->vs[i - 1].x + len * 1 * cos(ang * CONST));
+		// 	// 	d->vs[i].y = round(d->vs[i - 1].y + len * 1 * sin(ang * CONST));
+		// 	// }
+		// }
+		// i++;
+			// printf ("i:%d, (i + 1)/(d->map.size_x):%d \n", i, (i + 1) % (d->map.size_x));
+		// d->vs[i + d->map.size_x].y = round(d->vs[i - 1].x + len * 1 * cos((ang + 90) * CONST));
+		// d->vs[i + d->map.size_x].y = round(d->vs[i - 1].y + len * 1 * sin((ang + 90) * CONST));
+		// printf ("i:%d, (i + 1)/(d->map.size_x):%d \n", i, (i + 1) % (d->map.size_x));
+		// d->vs[i].x = round(d->vs[i - 1].x + len * 1 * cos(ang * CONST));
+		// d->vs[i].y = round(d->vs[i - 1].y + len * 1 * sin(ang * CONST));
