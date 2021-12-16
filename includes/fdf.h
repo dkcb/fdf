@@ -6,7 +6,7 @@
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/21 19:08:11 by dkocob        #+#    #+#                 */
-/*   Updated: 2021/12/14 21:15:24 by dkocob        ########   odam.nl         */
+/*   Updated: 2021/12/16 18:58:58 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,9 @@ struct	s_map {
 	// int				unx;
 	// int				uny;
 	int				un;
+	int				rot;
+	float				zoom;
+	float				iso;
 	// int				gapx;
 	// int				gapy;
 	// int				shiftx;

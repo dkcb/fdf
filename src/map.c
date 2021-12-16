@@ -6,7 +6,7 @@
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/21 19:00:06 by dkocob        #+#    #+#                 */
-/*   Updated: 2021/12/16 18:07:54 by dkocob        ########   odam.nl         */
+/*   Updated: 2021/12/16 18:40:12 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,11 @@ struct s_node	*vlist(struct s_data *d)
 	{
 		while (i2 < d->map.size_x)
 		{
-			d->vs[i1].x = d->map.start.x + i2 * d->map.un;
-			d->vs[i1].y = d->map.start.y + i3 * d->map.un;
-			d->vs[i1].z = 0; //val(&d->map.current->line[c]);
+			d->vs[i1].x = i2;
+			d->vs[i1].y = i3;
+			// d->vs[i1].x = d->map.start.x + i2 * d->map.un;
+			// d->vs[i1].y = d->map.start.y + i3 * d->map.un;
+			d->vs[i1].z = val(&d->map.current->line[c]);
 			while (ft_isdigit(d->map.current->line[c]) || d->map.current->line[c] == '-')
 				c++;
 			while (d->map.current->line[c] == ' ')
