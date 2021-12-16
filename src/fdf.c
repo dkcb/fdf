@@ -275,26 +275,57 @@ void	map_rotate(struct s_data *d)
 	}
 }
 
+// void	map_apply_z1(struct s_data *d)
+// {
+// 	int	i = 0;
+// 	float	ang =  35.264;
+// 	int	len = d->map.un;
+// 	ang = 35;
+
+// 	d->vs[0].x = d->map.start.x;
+// 	d->vs[0].y = d->map.start.y;
+// 	printf ("y0:%d\n", d->vs[i].y);
+// 	while (i < d->map.size_x * d->map.size_y)
+// 	{
+// 		if (i > 0 && i % (d->map.size_x) == 0)
+// 		{
+// 			d->vs[i].x = round(d->vs[i - d->map.size_x].x + len * 3 * cos((ang + d->vs[i].z * 30 + 90) * CONST));
+// 			d->vs[i].y = round(d->vs[i - d->map.size_x].y + len * 1 * sin((ang + d->vs[i].z * 30 + 90) * CONST));
+// 			printf ("i:%d, (i + 1)/(d->map.size_x):%d m+x:%d\n", i, (i) % (d->map.size_x), i + d->map.size_x);
+// 		}
+// 		d->vs[i + 1].x = round(d->vs[i].x + len * 3 * cos((ang + d->vs[i].z * 0) * CONST));
+// 		d->vs[i + 1].y = round(d->vs[i].y + len * 1 * sin((ang + d->vs[i].z * 0) * CONST));
+// 		i++;
+// 	}
+// }
+
+void	map_apply_r(struct s_data *d)
+{
+	int	i = 0;
+	float	ang =  35.264;
+	int	len = d->map.un;
+	ang = 0;
+
+	while (i < d->map.size_x * d->map.size_y)
+	{
+		d->vs[i].x = round(d->vs[i].x + len * (i % d->map.size_x) * cos(ang * CONST));
+		d->vs[i].y = round(d->vs[i].y + len * (i / d->map.size_x) * sin(ang * CONST));
+		printf ("i%%sx: %d, i/sx:%d \n", (i % d->map.size_x), (i / d->map.size_x));
+		i++;
+	}
+}
+
 void	map_apply_z(struct s_data *d)
 {
 	int	i = 0;
 	float	ang =  35.264;
 	int	len = d->map.un;
-	ang = 35;
+	ang = 135;
 
-	d->vs[0].x = d->map.start.x;
-	d->vs[0].y = d->map.start.y;
-	printf ("y0:%d\n", d->vs[i].y);
 	while (i < d->map.size_x * d->map.size_y)
 	{
-		if (i > 0 && i % (d->map.size_x) == 0)
-		{
-			d->vs[i].x = round(d->vs[i - d->map.size_x].x + len * 3 * cos((ang + d->vs[i].z * 15 + 90) * CONST));
-			d->vs[i].y = round(d->vs[i - d->map.size_x].y + len * 1 * sin((ang + d->vs[i].z * 15 + 90) * CONST));
-			printf ("i:%d, (i + 1)/(d->map.size_x):%d m+x:%d\n", i, (i) % (d->map.size_x), i + d->map.size_x);
-		}
-		d->vs[i + 1].x = round(d->vs[i].x + len * 3 * cos((ang + d->vs[i].z * 8) * CONST));
-		d->vs[i + 1].y = round(d->vs[i].y + len * 1 * sin((ang + d->vs[i].z * 8) * CONST));
+		d->vs[i].x = round(d->vs[i].x + len * d->vs[i].z * cos(ang * CONST));
+		d->vs[i].y = round(d->vs[i].y + len * d->vs[i].z * sin(ang * CONST));
 		i++;
 	}
 }
@@ -327,6 +358,7 @@ int	window(struct s_data *d)
 	d->win = mlx_new_window(d->mlx, d->img.rx, d->img.ry, "fdf");
 	draw_cube(c, d);
 	draw_vector_struct(d);
+	map_apply_r(d);
 	map_apply_z(d);
 	// map_rotate(d);
 	map_draw(d);
