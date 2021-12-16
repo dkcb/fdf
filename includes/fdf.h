@@ -6,7 +6,7 @@
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/21 19:08:11 by dkocob        #+#    #+#                 */
-/*   Updated: 2021/12/16 18:58:58 by dkocob        ########   odam.nl         */
+/*   Updated: 2021/12/16 21:42:07 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,19 +125,31 @@ struct	s_data {
 	struct s_node			*vs;
 };
 
-int			window(struct s_data *d);
-int			mouse_release(int press, int x, int y, struct s_data *d);
-int			mouse_press(int press, int x, int y, struct s_data *d);
-int			draw(struct s_data *d);
-int			bresenham_RB(int sx, int sy, int ex, int ey, int col, struct s_data *d);
-int			put_line(int sx, int sy, int ex, int ey, int col, struct s_data *d);
-int			order_int(int *x1, int *y1, int *x2, int *y2);
-int			get_next_line(int fd, char **line);
-int			map_init(int fd, struct s_data *d);
-int			build_frame (struct s_data *d);
-int			put_object(struct s_data *d);
-int			put_vector_br(int x1, int y1, double ang, double len, int col, struct s_data *d);
-void		draw_vector_struct(struct s_data *d);
+
+void	put_pixel(int x, int y, int col, struct s_data *d);
+void	bresenham_ (int x1, int y1, int x2, int y2, int col, struct s_data *d);
+int		put_line(int x1, int y1, int x2, int y2, int col, struct s_data *d);
+void	map_draw(struct s_data *d);
+void	map_apply_z(struct s_data *d);
+void	map_rotate(struct s_data *d);
+void	bresenham_ (int x1, int y1, int x2, int y2, int col, struct s_data *d);
+int		order_int(int *x1, int *y1, int *x2, int *y2);
+int		closehook(int keycode, struct s_data *d);
+int		mouse_move(int x, int y, struct s_data *d);
+int		hooks(struct s_data *d);
+int		window(struct s_data *d);
+int		mouse_release(int press, int x, int y, struct s_data *d);
+int		mouse_press(int press, int x, int y, struct s_data *d);
+int		draw(struct s_data *d);
+int		bresenham_RB(int sx, int sy, int ex, int ey, int col, struct s_data *d);
+int		put_line(int sx, int sy, int ex, int ey, int col, struct s_data *d);
+int		order_int(int *x1, int *y1, int *x2, int *y2);
+int		get_next_line(int fd, char **line);
+int		map_init(int fd, struct s_data *d);
+int		build_frame (struct s_data *d);
+int		put_object(struct s_data *d);
+int		put_vector_br(int x1, int y1, double ang, double len, int col, struct s_data *d);
+void	draw_vector_struct(struct s_data *d);
 
 
 
@@ -954,3 +966,98 @@ void		draw_vector_struct(struct s_data *d);
 		// printf ("i:%d, (i + 1)/(d->map.size_x):%d \n", i, (i + 1) % (d->map.size_x));
 		// d->vs[i].x = round(d->vs[i - 1].x + len * 1 * cos(ang * CONST));
 		// d->vs[i].y = round(d->vs[i - 1].y + len * 1 * sin(ang * CONST));
+
+
+// void v_end_calc(struct s_v *v, int ang, int len)
+// {
+// 	v->end.x = round(v->start.x + len * cos(ang * CONST));
+// 	v->end.y = round(v->start.y + len * sin(ang * CONST));
+// }
+
+// // void v_end_calcZX(struct s_v *v, int ang, int len)
+// // {
+// // 	double CONST = 0.0174533;
+
+// // 	v->end.x = round(v->start.x + len * cos(ang * CONST));
+// // 	v->end.y = round(v->start.y + len * sin(ang * CONST));
+// // 	v->end.x = round(v->end.x - len * cos(35.264 * CONST));
+// // 	v->end.y = round(v->end.y + len * sin(35.264 * CONST));
+// // }
+
+// // void v_end_calcZY(struct s_v *v, int ang, int len)
+// // {
+// // 	double CONST = 0.0174533;
+
+// // 	v->end.x = round(v->start.x + len * cos(ang * CONST));
+// // 	v->end.y = round(v->start.y + len * sin(ang * CONST));
+// // 	v->end.x = round(v->end.x + len * cos(35.264 * CONST));
+// // 	v->end.y = round(v->end.y + len * sin(35.264 * CONST));
+// // }
+
+// int	draw_vect_ang(struct s_v v, struct s_data *d)
+// {
+// 	put_line(v.start.x, v.start.y, v.end.x, v.end.y, v.col, d);
+// 	return (0);
+// }
+
+
+// int	draw_quadrat(struct s_v v, struct s_data *d)
+// {	
+// 	// struct s_v	v;
+// 	int	i = 0;
+	
+// 	// v.ang = 45;
+// 	// v.col = 0x00FF0000;	
+// 	// v.start.x = 100;
+// 	// v.start.y = 10;
+// 	// v.len = 50;
+// 	// v.ang = 0;
+// 	while (i++ < 4)
+// 	{
+// 		v_end_calc(&v, v.ang, v.len);
+// 		draw_vect_ang(v, d);
+// 		v.start.x = v.end.x;
+// 		v.start.y = v.end.y;
+// 		v.ang += 90;
+// 		// d->v.col += 27500;
+// 	}
+// 	return (0);
+// }
+
+// int	draw_cube(struct s_cube cube, struct s_data *d)
+// {	
+// 	struct s_v	v;
+// 	int	i = 0;
+// 	double iso =  35.264;
+// 	iso =  35.264;
+	
+// 	v.ang = 15;
+// 	v.col = 0x00FF0000;	
+// 	v.end.x = 100;
+// 	v.end.y = 100;
+// 	v.len = 50;
+// 	while (i++ < 4)
+// 	{
+// 		v.start.x = v.end.x;
+// 		v.start.y = v.end.y;
+// 		v.ang += 90;
+// 		v_end_calc(&v, v.ang, v.len);
+// 		draw_vect_ang(v, d);
+// 	}
+// 	i = 0;
+// 	v.start.x = v.end.x;
+// 	v.start.y = v.end.y;
+// 	v.end.x = round(v.start.x + v.len/2 * cos(iso * CONST));
+// 	v.end.y = round(v.start.y + v.len/2 * sin(iso * CONST));
+// 	draw_vect_ang(v, d);
+
+// 	while (i++ < 4)
+// 	{
+// 		v.start.x = v.end.x;
+// 		v.start.y = v.end.y;
+// 		v.ang += 90;
+// 		v_end_calc(&v, v.ang, v.len);
+// 		draw_vect_ang(v, d);
+// 	}
+// 	return (0);
+// }
