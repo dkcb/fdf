@@ -6,11 +6,25 @@
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/27 17:55:01 by dkocob        #+#    #+#                 */
-/*   Updated: 2021/12/16 21:41:28 by dkocob        ########   odam.nl         */
+/*   Updated: 2021/12/17 22:18:30 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
+
+void	img_clear(unsigned int col, struct s_data *d)
+{
+	int	i1 = -1;
+	int	i2 = -1;
+
+	while(i1++ <= d->img.ry)
+	{
+		while (i2++ <= d->img.rx)
+			put_pixel(i2, i1, col, d);
+		i2 = -1;
+	}
+	
+}
 
 void	put_pixel(int x, int y, int col, struct s_data *d)
 {
@@ -45,12 +59,19 @@ void	bresenham_ (int x1, int y1, int x2, int y2, int col, struct s_data *d)
 	while (x1 <= x2)
 	{ 
 		put_pixel(x1, y1, col, d);
-		if (x1 == x2 && y1 == y2) break;
+		if (x1 == x2 && y1 == y2)
+			break;
 		e2 = 2 * err;
 		if (e2 >= dy)
-		{ err += dy; x1 += sx; } /* e_xy+e_x > 0 */
+		{
+			err += dy;
+			x1 += sx;
+		}
 		if (e2 <= dx)
-		{ err += dx; y1 += sy; } /* e_xy+e_y < 0 */
+		{
+			err += dx;
+			y1 += sy;
+		}
 	}
 }
 

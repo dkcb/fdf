@@ -6,7 +6,7 @@
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/21 19:00:06 by dkocob        #+#    #+#                 */
-/*   Updated: 2021/12/16 21:33:26 by dkocob        ########   odam.nl         */
+/*   Updated: 2021/12/17 21:43:15 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ struct s_node	*vlist(struct s_data *d)
 	int	i2 = 0;
 	int	i3 = 0;
 	int	c = 0;
+	int	max = 0;
+	int	min = 0;
 	
 	d->vs = malloc(sizeof(struct s_node) * d->map.size_x * d->map.size_y);
 	if (!d->vs)
@@ -54,6 +56,10 @@ struct s_node	*vlist(struct s_data *d)
 		while (i2 < d->map.size_x)
 		{
 			d->vs[i1].z = val(&d->map.current->line[c]);
+			if (d->vs[i1].z > max)
+				max = d->vs[i1].z;
+			if (d->vs[i1].z < min)
+				min = d->vs[i1].z;
 			while (ft_isdigit(d->map.current->line[c]) || d->map.current->line[c] == '-')
 				c++;
 			while (d->map.current->line[c] == ' ')
@@ -65,6 +71,8 @@ struct s_node	*vlist(struct s_data *d)
 		i3++;
 		c = 0;
 		i2 = 0;
+		// printf ("min:%d, max:%d\n", min, max);
+		d->map.zoom = (float)3 / (abs(min) + abs(max));
 	}
 	return (d->vs);
 }

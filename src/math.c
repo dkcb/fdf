@@ -31,20 +31,18 @@ int	order_int(int *x1, int *y1, int *x2, int *y2)
 void	map_rotate(struct s_data *d)
 {
 	int	i = 0;
-	int	ang = d->map.rot;
-	int	len = d->map.un;
 
 	d->vs[0].x = d->map.start.x;
 	d->vs[0].y = d->map.start.y;
 	while (i < d->map.size_x * d->map.size_y)
 	{
-		if (i > 0 && i % (d->map.size_x) == 0)
+		if (i > 0 && i % d->map.size_x == 0)
 		{
-			d->vs[i].x = round(d->vs[i - d->map.size_x].x + len * 1 * cos((ang + 90) * CONST));
-			d->vs[i].y = round(d->vs[i - d->map.size_x].y + len * d->map.iso * sin((ang + 90) * CONST));
+			d->vs[i].x = round(d->vs[i - d->map.size_x].x + d->map.un * 1 * cos((d->map.rot + 90) * CONST));
+			d->vs[i].y = round(d->vs[i - d->map.size_x].y + d->map.un * d->map.iso * sin((d->map.rot + 90) * CONST));
 		}
-		d->vs[i + 1].x = round(d->vs[i].x + len * 1 * cos(ang * CONST));
-		d->vs[i + 1].y = round(d->vs[i].y + len * 1 * sin(ang * CONST));
+		d->vs[i + 1].x = round(d->vs[i].x + d->map.un  * cos(d->map.rot * CONST));
+		d->vs[i + 1].y = round(d->vs[i].y + d->map.un  * sin(d->map.rot * CONST));
 		i++;
 	}
 }
@@ -52,15 +50,12 @@ void	map_rotate(struct s_data *d)
 void	map_apply_z(struct s_data *d)
 {
 	int	i = 0;
-	float	ang =  35.264;
-	int	len = d->map.un;
-	// ang = 135;
-	ang = d->map.rot - 90;
+	int	ang = d->map.rot - 90;
 
 	while (i < d->map.size_x * d->map.size_y)
 	{
-		d->vs[i].x = round(d->vs[i].x + len * d->vs[i].z * d->map.zoom * cos(ang * CONST));
-		d->vs[i].y = round(d->vs[i].y + len * d->vs[i].z  * d->map.zoom * sin(ang * CONST));
+		d->vs[i].x = round(d->vs[i].x + d->map.un * d->vs[i].z * d->map.zoom * cos(ang * CONST));
+		d->vs[i].y = round(d->vs[i].y + d->map.un * d->vs[i].z  * d->map.zoom * sin(ang * CONST));
 		i++;
 	}
 }

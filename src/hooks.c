@@ -16,10 +16,26 @@ int	closehook(int keycode, struct s_data *d)
 {
 	(void)d;
 	printf("ECKEYCODE:%d\n", keycode);
+	if (keycode == 125)
+		d->map.iso += (float)0.4;
+	if (keycode == 126)
+		d->map.iso -= (float)0.4;
+	if (keycode == 123)
+		d->map.rot -= 10;
+	if (keycode == 124)
+		d->map.rot += 10;
+	if (keycode == 78)
+		d->map.un -= 10;
+	if (keycode == 69)
+		d->map.un += 10;
 	if (keycode == 53)
 		exit(0);
 	if (keycode < 0)
 		exit(0);
+	img_clear(0x00000000, d);
+	map_rotate(d);
+	map_apply_z(d);
+	map_draw(d);
 	return (0);
 }
 
@@ -53,7 +69,15 @@ int	mouse_release(int press, int x, int y, struct s_data *d)
 
 	if (d->m.pr == 1)
 	{
-		put_line(d->m.px, d->m.py, x, y, 0x00FF0000, d);
+		// put_line(d->m.px, d->m.py, x, y, 0x00FF0000, d);
+		d->map.start.y -= (d->m.py - y);
+		d->map.start.x -= (d->m.px - x);
+		// d->map.iso += (d->m.py - y) / 100;
+		// d->map.rot += (d->m.px - x) / 10;
+		img_clear(0x00000000, d);
+		map_rotate(d);
+		map_apply_z(d);
+		map_draw(d);
 	}
 	d->m.pr = 0;
 	return (0);
@@ -61,7 +85,6 @@ int	mouse_release(int press, int x, int y, struct s_data *d)
 
 int	hooks(struct s_data *d)
 {
-
 	mlx_hook(d->win, 2, 1<<0, closehook, d); //key press
 	mlx_hook(d->win, 17, 1<<0, closehook, d); //close button
 	mlx_hook(d->win, 4, 0, mouse_press, d);
