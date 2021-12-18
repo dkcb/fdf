@@ -6,7 +6,7 @@
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/21 19:00:06 by dkocob        #+#    #+#                 */
-/*   Updated: 2021/12/17 21:43:15 by dkocob        ########   odam.nl         */
+/*   Updated: 2021/12/18 17:53:54 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ struct s_node	*vlist(struct s_data *d)
 		c = 0;
 		i2 = 0;
 		// printf ("min:%d, max:%d\n", min, max);
-		d->map.zoom = (float)3 / (abs(min) + abs(max));
+		d->map.zoom = (float)3 / (abs(min) + abs(max) + 0.01);
 	}
 	return (d->vs);
 }

@@ -6,7 +6,7 @@
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/21 18:56:32 by dkocob        #+#    #+#                 */
-/*   Updated: 2021/12/18 17:28:38 by dkocob        ########   odam.nl         */
+/*   Updated: 2021/12/18 18:10:03 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	main(int argc, char **argv)
 	// if (!((fd = open("./test_maps/mars.fdf", O_RDONLY)) >= 0))
 	// if (!((fd = open("test_maps/42.fdf", O_RDONLY)) >= 0))
 	// if (!((fd = open("test_maps/t1.fdf", O_RDONLY)) >= 0))
+	// if (!((fd = open("test_maps/plat.fdf", O_RDONLY)) >= 0))
 		return (-1);
 	map_init(fd, &d);
 	d.map.lhead = (void *)0;
@@ -33,7 +34,7 @@ int	main(int argc, char **argv)
 	d.map.iso = 0.3;
 	d.img.rx = X_REZ;
 	d.img.ry = Y_REZ;
-	d.map.un = d.img.rx / (d.map.size_x * (float)1.5);
+	d.map.un = d.img.rx / (d.map.size_x * (float)1.8);
 	d.map.start.x = d.map.un * (d.map.size_x /4);
 	d.map.start.y = d.map.un * (d.map.size_x /1.5);
 	d.p.col = 0x00FF0000;
