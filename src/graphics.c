@@ -6,7 +6,7 @@
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/27 17:55:01 by dkocob        #+#    #+#                 */
-/*   Updated: 2021/12/17 22:18:30 by dkocob        ########   odam.nl         */
+/*   Updated: 2021/12/18 17:22:01 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ int	put_line(int x1, int y1, int x2, int y2, int col, struct s_data *d)
 {
 	order_int(&x1, &y1, &x2, &y2);
 	bresenham_(x1, y1, x2, y2, col, d);
-	mlx_put_image_to_window(d->mlx, d->win, d->img.img, 0, 0);
 	return (0);
 }
 
@@ -88,6 +87,7 @@ void	map_draw(struct s_data *d)
 {
 	int	i = 0;
 	
+	img_clear(0x00000000, d);
 	while (i < d->map.size_x * d->map.size_y)
 	{
 		if (i % (d->map.size_x) != d->map.size_x - 1)
@@ -96,4 +96,5 @@ void	map_draw(struct s_data *d)
 			put_line(d->vs[i].x, d->vs[i].y, d->vs[i - d->map.size_x].x, d->vs[i - d->map.size_x].y, 0x00F08000, d); // y
 		i++;
 	}
+	mlx_put_image_to_window(d->mlx, d->win, d->img.img, 0, 0);
 }

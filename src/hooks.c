@@ -17,25 +17,25 @@ int	closehook(int keycode, struct s_data *d)
 	(void)d;
 	printf("ECKEYCODE:%d\n", keycode);
 	if (keycode == 125)
-		d->map.iso += (float)0.4;
+		d->map.iso += (float)0.2;
 	if (keycode == 126)
-		d->map.iso -= (float)0.4;
+		d->map.iso -= (float)0.2;
 	if (keycode == 123)
-		d->map.rot -= 10;
+		d->map.rot -= 5;
 	if (keycode == 124)
-		d->map.rot += 10;
+		d->map.rot += 5;
 	if (keycode == 78)
-		d->map.un -= 10;
+		d->map.un *= 0.7;
 	if (keycode == 69)
-		d->map.un += 10;
+		d->map.un *= 1.3;
 	if (keycode == 53)
 		exit(0);
 	if (keycode < 0)
 		exit(0);
-	img_clear(0x00000000, d);
 	map_rotate(d);
 	map_apply_z(d);
 	map_draw(d);
+	printf("iso:%f, rot:%d, ", d->map.iso, d->map.rot );
 	return (0);
 }
 
@@ -48,7 +48,7 @@ int	mouse_move(int x, int y, struct s_data *d)
 	{
 		// printf("MPR==1! x:%d, y:%d, mpr:%d\n", x, y, d->m.pr);
 		put_pixel(x, y, 0x00FF0000, d);
-		mlx_put_image_to_window(d->mlx, d->win, d->img.img, 0, 0);
+		// mlx_put_image_to_window(d->mlx, d->win, d->img.img, 0, 0);
 	}
 	return (0);
 }
@@ -74,7 +74,6 @@ int	mouse_release(int press, int x, int y, struct s_data *d)
 		d->map.start.x -= (d->m.px - x);
 		// d->map.iso += (d->m.py - y) / 100;
 		// d->map.rot += (d->m.px - x) / 10;
-		img_clear(0x00000000, d);
 		map_rotate(d);
 		map_apply_z(d);
 		map_draw(d);

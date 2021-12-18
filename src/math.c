@@ -38,11 +38,11 @@ void	map_rotate(struct s_data *d)
 	{
 		if (i > 0 && i % d->map.size_x == 0)
 		{
-			d->vs[i].x = round(d->vs[i - d->map.size_x].x + d->map.un * 1 * cos((d->map.rot + 90) * CONST));
+			d->vs[i].x = round(d->vs[i - d->map.size_x].x + d->map.un * cos((d->map.rot + 90) * CONST));
 			d->vs[i].y = round(d->vs[i - d->map.size_x].y + d->map.un * d->map.iso * sin((d->map.rot + 90) * CONST));
 		}
-		d->vs[i + 1].x = round(d->vs[i].x + d->map.un  * cos(d->map.rot * CONST));
-		d->vs[i + 1].y = round(d->vs[i].y + d->map.un  * sin(d->map.rot * CONST));
+		d->vs[i + 1].x = round(d->vs[i].x + d->map.un * cos(d->map.rot * CONST));
+		d->vs[i + 1].y = round(d->vs[i].y + d->map.un * sin(d->map.rot * CONST));
 		i++;
 	}
 }
@@ -55,7 +55,7 @@ void	map_apply_z(struct s_data *d)
 	while (i < d->map.size_x * d->map.size_y)
 	{
 		d->vs[i].x = round(d->vs[i].x + d->map.un * d->vs[i].z * d->map.zoom * cos(ang * CONST));
-		d->vs[i].y = round(d->vs[i].y + d->map.un * d->vs[i].z  * d->map.zoom * sin(ang * CONST));
+		d->vs[i].y = round(d->vs[i].y + d->map.un * d->vs[i].z * d->map.zoom * sin(ang * CONST));
 		i++;
 	}
 }
