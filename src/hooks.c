@@ -32,9 +32,7 @@ int	closehook(int keycode, struct s_data *d)
 		exit(0);
 	if (keycode < 0)
 		exit(0);
-	map_rotate(d);
-	map_apply_z(d);
-	map_draw(d);
+	render(d);
 	printf("iso:%f, rot:%d, ", d->map.iso, d->map.rot );
 	return (0);
 }
@@ -74,9 +72,7 @@ int	mouse_release(int press, int x, int y, struct s_data *d)
 		d->map.start.x -= (d->m.px - x);
 		// d->map.iso += (d->m.py - y) / 100;
 		// d->map.rot += (d->m.px - x) / 10;
-		map_rotate(d);
-		map_apply_z(d);
-		map_draw(d);
+	render(d);
 	}
 	d->m.pr = 0;
 	return (0);

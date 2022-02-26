@@ -6,7 +6,7 @@
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/27 17:55:01 by dkocob        #+#    #+#                 */
-/*   Updated: 2021/12/18 17:22:01 by dkocob        ########   odam.nl         */
+/*   Updated: 2022/02/26 18:27:55 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,35 @@ void	bresenham_ (int x1, int y1, int x2, int y2, int col, struct s_data *d)
 }
 
 
+
+int	center(struct s_data *d)
+{
+	get_size(d);
+	while (d->map.start.x > (d->img.rx - (d->map.maxx - d->map.minx)) / 4)
+		d->map.start.x--;
+	while (d->map.start.x < (d->img.rx - (d->map.maxx - d->map.minx)) / 4)
+		d->map.start.x++;
+	// while (d->img.rx - (d->map.maxx - d->map.minx) != d->img.rx / 2)
+	// {
+	// 	if (d->img.rx - (d->map.maxx - d->map.minx))
+	// 	d->map.start.x--;
+	// while (d->img.rx - (d->map.maxx - d->map.minx) >= d->img.rx / 2)
+	// 	d->map.start.x++;
+	// }
+	// float size = get_size(d);
+
+	// while (d->map.size_x * d->map.un != d->img.rx)
+	
+	// || d->map.size_y * d->map.un < d->img.ry)
+	return (0);
+}
+
+void	adjust_scale(struct s_data *d)
+{
+	// while (d->map.)
+	// while (d->map.size_x * d->map.un < d->img.rx || d->map.size_y * d->map.un < d->img.ry)
+}
+
 int	put_line(int x1, int y1, int x2, int y2, int col, struct s_data *d)
 {
 	order_int(&x1, &y1, &x2, &y2);
@@ -97,4 +126,14 @@ void	map_draw(struct s_data *d)
 		i++;
 	}
 	mlx_put_image_to_window(d->mlx, d->win, d->img.img, 0, 0);
+}
+
+void	render(struct s_data *d)
+{
+	map_rotate(d);
+	// map_apply_z(d);
+	// center(d);
+	// map_rotate(d);
+	// map_apply_z(d);
+	map_draw(d);
 }

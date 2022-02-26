@@ -6,7 +6,7 @@
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/21 19:08:11 by dkocob        #+#    #+#                 */
-/*   Updated: 2021/12/18 16:05:06 by dkocob        ########   odam.nl         */
+/*   Updated: 2022/02/26 18:16:21 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,10 @@ struct	s_map {
 	int				size_x;
 	int				size_y;
 	int				size_z;
+	int				minx;
+	int				miny;
+	int				maxx;
+	int				maxy;
 	int				un;
 	int				rot;
 	float			zoom;
@@ -116,6 +120,8 @@ struct	s_data {
 	struct s_node			*vs;
 };
 
+int		center(struct s_data *d);
+void	get_size(struct s_data *d);
 void	draw_vector_struct(struct s_data *d);
 void	img_clear(unsigned int col, struct s_data *d);
 void	put_pixel(int x, int y, int col, struct s_data *d);
@@ -124,6 +130,7 @@ int		put_line(int x1, int y1, int x2, int y2, int col, struct s_data *d);
 void	map_draw(struct s_data *d);
 void	map_apply_z(struct s_data *d);
 void	map_rotate(struct s_data *d);
+void	render(struct s_data *d);
 void	bresenham_ (int x1, int y1, int x2, int y2, int col, struct s_data *d);
 int		order_int(int *x1, int *y1, int *x2, int *y2);
 int		closehook(int keycode, struct s_data *d);

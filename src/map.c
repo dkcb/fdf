@@ -6,7 +6,7 @@
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/21 19:00:06 by dkocob        #+#    #+#                 */
-/*   Updated: 2021/12/18 17:53:54 by dkocob        ########   odam.nl         */
+/*   Updated: 2022/02/26 17:57:27 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,32 @@ void	draw_vector_struct(struct s_data *d)
 			printf("\n");
 		i++;
 	}
+}
+
+void	get_size(struct s_data *d)
+{
+	int i;
+
+	i = 0;
+	d->map.minx = 999999;
+	d->map.miny = 999999;
+	d->map.maxx = -999999;
+	d->map.maxy = -999999;
+	while (i < d->map.size_x * d->map.size_y)
+	{
+		if (d->vs[i].x < d->map.minx)
+			d->map.minx = d->vs[i].x;
+		if (d->vs[i].y < d->map.miny)
+			d->map.miny = d->vs[i].y;
+		if (d->vs[i].x > d->map.maxx)
+			d->map.maxx = d->vs[i].x;
+		if (d->vs[i].y > d->map.maxy)
+			d->map.maxy = d->vs[i].y;
+		i++;
+	}
+	printf("minx:%d, miny:%d, maxx:%d, maxy:%d, \n ", d->map.minx, d->map.miny, d->map.maxx, d->map.maxy);
+	printf("sizex:%d, sizey:%d \n ", d->map.maxx - d->map.minx, d->map.maxy - d->map.miny);
+	// while (d->map.size_x * d->map.un < d->img.rx || d->map.size_y * d->map.un < d->img.ry)
 }
 
 int	map_init(int fd, struct s_data *d)
