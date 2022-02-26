@@ -6,7 +6,7 @@
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/21 19:00:06 by dkocob        #+#    #+#                 */
-/*   Updated: 2022/02/26 17:57:27 by dkocob        ########   odam.nl         */
+/*   Updated: 2022/02/26 20:19:24 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,11 @@ struct s_node	*vlist(struct s_data *d)
 				min = d->vs[i1].z;
 			while (ft_isdigit(d->map.current->line[c]) || d->map.current->line[c] == '-')
 				c++;
+			if (d->map.current->line[c] == ',')
+			{
+				c+= 3;
+				d->vs[i1].col = val16(&d->map.current->line[c]);
+			}
 			while (d->map.current->line[c] == ' ')
 				c++;
 			i1++;

@@ -6,7 +6,7 @@
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/21 19:08:11 by dkocob        #+#    #+#                 */
-/*   Updated: 2022/02/26 18:16:21 by dkocob        ########   odam.nl         */
+/*   Updated: 2022/02/26 20:03:52 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,10 @@
 #define CONST 0.0174533
 
 typedef struct s_node {
-	int	x;
-	int	y;
-	int	z;
+	int				x;
+	int				y;
+	int				z;
+	unsigned int	col;
 }	t_node;
 
 typedef struct s_cube {
@@ -110,14 +111,14 @@ struct	s_mouse {
 };
 
 struct	s_data {
-	void					*win;
-	void					*mlx;
-	struct s_mouse			m;
-	struct s_map			map;
-	struct s_img			img;
-	struct s_p				p;
-	struct s_v				v;
-	struct s_node			*vs;
+	void			*win;
+	void			*mlx;
+	struct s_mouse	m;
+	struct s_map	map;
+	struct s_img	img;
+	struct s_p		p;
+	struct s_v		v;
+	struct s_node	*vs;
 };
 
 int		center(struct s_data *d);

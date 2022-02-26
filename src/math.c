@@ -6,7 +6,7 @@
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/20 17:54:41 by dkocob        #+#    #+#                 */
-/*   Updated: 2022/02/26 17:50:47 by dkocob        ########   odam.nl         */
+/*   Updated: 2022/02/26 18:40:14 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ void	map_rotate(struct s_data *d)
 	{
 		if (i > 0 && i % d->map.size_x == 0)
 		{
-			d->vs[i].x = round(d->vs[i - d->map.size_x].x + d->map.un * cos((d->map.rot + 90) * CONST));
-			d->vs[i].y = round(d->vs[i - d->map.size_x].y + d->map.un * d->map.iso * sin((d->map.rot + 90) * CONST));
+			d->vs[i].x = round(d->vs[i - d->map.size_x].x + d->map.un * cos((d->map.rot) * CONST));
+			d->vs[i].y = round(d->vs[i - d->map.size_x].y + d->map.un * d->map.iso * sin((d->map.rot) * CONST));
 		}
 		d->vs[i + 1].x = round(d->vs[i].x + d->map.un * cos(d->map.rot * CONST));
 		d->vs[i + 1].y = round(d->vs[i].y + d->map.un * sin(d->map.rot * CONST));

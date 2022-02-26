@@ -17,9 +17,9 @@ int	closehook(int keycode, struct s_data *d)
 	(void)d;
 	printf("ECKEYCODE:%d\n", keycode);
 	if (keycode == 125)
-		d->map.iso += (float)0.2;
+		d->map.zoom -= (float)0.2;
 	if (keycode == 126)
-		d->map.iso -= (float)0.2;
+		d->map.zoom += (float)0.2;
 	if (keycode == 123)
 		d->map.rot -= 5;
 	if (keycode == 124)
