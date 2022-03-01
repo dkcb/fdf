@@ -6,7 +6,7 @@
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/21 19:00:06 by dkocob        #+#    #+#                 */
-/*   Updated: 2022/02/26 20:19:24 by dkocob        ########   odam.nl         */
+/*   Updated: 2022/03/01 16:33:22 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,9 @@ struct s_node	*vlist(struct s_data *d)
 			{
 				c+= 3;
 				d->vs[i1].col = val16(&d->map.current->line[c]);
+				while (d->map.current->line[c] != ' ')
+				c++;
+				printf(" %X, ", d->vs[i1].col);
 			}
 			while (d->map.current->line[c] == ' ')
 				c++;

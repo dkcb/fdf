@@ -6,7 +6,7 @@
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/21 20:46:31 by dkocob        #+#    #+#                 */
-/*   Updated: 2022/02/26 20:20:21 by dkocob        ########   odam.nl         */
+/*   Updated: 2022/03/01 16:31:41 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	val16(char *s)
 	while (s[i] && ft_isdigit16(s[i]))
 	{
 		if (s[i] > 9)
-			res = res + (s[i] - 51) * pwr;
+			res = res + (s[i] - 50) * pwr;
 		else
 		{
 			res = res + (s[i] - '0') * pwr;

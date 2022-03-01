@@ -6,7 +6,7 @@
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/21 19:08:11 by dkocob        #+#    #+#                 */
-/*   Updated: 2022/02/26 20:03:52 by dkocob        ########   odam.nl         */
+/*   Updated: 2022/03/01 15:36:22 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ struct	s_map {
 	int				miny;
 	int				maxx;
 	int				maxy;
-	int				un;
+	float			un;
 	int				rot;
 	float			zoom;
 	float			iso;

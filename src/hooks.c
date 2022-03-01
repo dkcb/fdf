@@ -25,9 +25,9 @@ int	closehook(int keycode, struct s_data *d)
 	if (keycode == 124)
 		d->map.rot += 5;
 	if (keycode == 78)
-		d->map.un *= 0.7;
+		d->map.un *= (float)0.7;
 	if (keycode == 69)
-		d->map.un *= 1.3;
+		d->map.un *= (float)1.3;
 	if (keycode == 53)
 		exit(0);
 	if (keycode < 0)
