@@ -6,7 +6,7 @@
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/21 19:08:11 by dkocob        #+#    #+#                 */
-/*   Updated: 2022/03/01 17:30:21 by dkocob        ########   odam.nl         */
+/*   Updated: 2022/03/01 18:03:34 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 #include <stdlib.h>
 #define X_REZ 1024
 #define Y_REZ 768
-#define CONST 0.0174533
+#define R 0.0174533
 
 struct	s_p {
 	double			x;
@@ -43,10 +43,10 @@ struct	s_line {
 	struct s_line	*next;
 };
 
-struct	s_map {
-	int				size_x;
-	int				size_y;
-	int				size_z;
+struct	s_m {
+	int				szx;
+	int				szy;
+	int				szz;
 	int				minx;
 	int				miny;
 	int				maxx;
@@ -83,8 +83,8 @@ struct	s_mouse {
 struct	s_data {
 	void			*win;
 	void			*mlx;
-	struct s_mouse	m;
-	struct s_map	map;
+	struct s_mouse	c;
+	struct s_m		m;
 	struct s_img	img;
 	struct s_p		p;
 	struct s_v		v;

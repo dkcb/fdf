@@ -6,7 +6,7 @@
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/06/05 17:10:10 by dkocob        #+#    #+#                 */
-/*   Updated: 2021/12/16 21:47:20 by dkocob        ########   odam.nl         */
+/*   Updated: 2022/03/01 17:48:10 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -231,9 +231,9 @@
 // {	
 // 	int	i1 = 0;
 // 	int	i2 = 0;
-// 	int	unitx = d->img.rx / (d->map.size_x + 20);
+// 	int	unitx = d->img.rx / (d->m.size_x + 20);
 // 	int	unity = unitx;
-// 	// int	unity = d->img.ry / (d->map.size_y + 4);
+// 	// int	unity = d->img.ry / (d->m.size_y + 4);
 // 	int gapx = unitx;
 // 	int gapy = unity;
 // 	int	isometry = unitx * 2;
@@ -242,9 +242,9 @@
 
 // 	// put_line(unitx, unity, d->img.rx - unitx, d->img.ry - unity, 0x00FF0000, d);
 // 	// put_line(unitx, unity, d->img.rx - unitx, unity, 0x00FF0000, d);
-// 	while (i1 < d->map.size_y)
+// 	while (i1 < d->m.size_y)
 // 	{
-// 		while (i2 < d->map.size_x)
+// 		while (i2 < d->m.size_x)
 // 		{
 // 			// put_line(gapx + unitx * i2, gapy + unity * i1, gapx + unitx * (i2 + 1), gapy + unity * (i1 + 1), 0x00FF0000, d);
 // 			put_line((gapx + unitx * i2) + isometry, (gapy + unity * i1) - isometry, (gapx + unitx * (i2 + 1)) + isometry, (gapy + unity * i1) - isometry, 0x00FF0000, d); // X lines
@@ -254,8 +254,8 @@
 // 		i2 = 0;
 // 		i1++;
 // 	}
-// 	put_line(gapx , gapy + unity * d->map.size_y, gapx + unitx * d->map.size_x, gapy + unity * d->map.size_y, 0x00FF0000, d); // X lines
-// 	put_line(gapx + unitx * d->map.size_x, gapy, gapx + unitx * d->map.size_x , gapy + unity * d->map.size_y, 0x00FF0000, d); // Y lines
+// 	put_line(gapx , gapy + unity * d->m.size_y, gapx + unitx * d->m.size_x, gapy + unity * d->m.size_y, 0x00FF0000, d); // X lines
+// 	put_line(gapx + unitx * d->m.size_x, gapy, gapx + unitx * d->m.size_x , gapy + unity * d->m.size_y, 0x00FF0000, d); // Y lines
 // 	mlx_put_image_to_window(d->mlx, d->win, d->img.img, 0, 0);
 // 	return (0);
 // }
@@ -265,24 +265,24 @@
 // 	int	i1 = 0;
 // 	int	i2 = 0;
 
-// 	d->map.unx = d->img.rx / (d->map.size_x + 20);
-// 	d->map.uny = d->map.unx;
-// 	d->map.gapx =  d->map.unx;
-// 	d->map.gapy =  d->map.gapx;
-// 	d->map.iso = 2;
-// 	d->map.shiftx = 2 * d->map.unx;
-// 	d->map.shifty = 1;
-// 	while (i1 < d->map.size_y)
+// 	d->m.unx = d->img.rx / (d->m.size_x + 20);
+// 	d->m.uny = d->m.unx;
+// 	d->m.gapx =  d->m.unx;
+// 	d->m.gapy =  d->m.gapx;
+// 	d->m.iso = 2;
+// 	d->m.shiftx = 2 * d->m.unx;
+// 	d->m.shifty = 1;
+// 	while (i1 < d->m.size_y)
 // 	{
-// 		while (i2 < d->map.size_x * 2)
+// 		while (i2 < d->m.size_x * 2)
 // 		{
-// 			// put_line(d->map.gapx + d->map.unx * i2, d->map.gapy + d->map.uny * i1, d->map.gapx + d->map.unx * (i2 + 1), d->map.gapy + d->map.uny * (i1 + 1), 0x00FF0000, d);
-// 			// put_line((d->map.gapx + d->map.unx * i2) + d->map.iso, (d->map.gapy + d->map.uny * i1) - d->map.iso, (d->map.gapx + d->map.unx * (i2 + 1)) + d->map.iso, (d->map.gapy + d->map.uny * i1) - d->map.iso, 0x00FF0000, d); // X lines
-// 			// put_line((d->map.gapx + d->map.unx * i2) + d->map.iso, (d->map.gapy + d->map.uny * i1) + d->map.iso, (d->map.gapx + d->map.unx * i2) + d->map.iso , (d->map.gapy + d->map.uny * (i1 + 1)) + d->map.iso, 0x00FF0000, d); // Y lines
-// 			// put_line((d->map.gapx + d->map.unx * i2)+ d->map.iso, (d->map.gapy + d->map.uny * i1), (d->map.gapx + d->map.unx * (i2 + 1)) + d->map.iso, (d->map.gapy + d->map.uny * i1), 0x00FF0000, d); // X lines
-// 			// put_line(d->map.gapx + d->map.unx * i2 + d->map.shiftx * i1 , (d->map.gapy + d->map.uny * i1) + d->map.iso, (d->map.gapx + d->map.unx * i2) + d->map.iso , (d->map.gapy + d->map.uny * (i1 + 1)) + d->map.iso, 0x00FF0000, d); // Y lines
-// 			put_line(d->map.gapx + d->map.unx * i2 + d->map.shiftx * i1 , d->map.gapy + d->map.uny * i1, d->map.gapx + d->map.unx * (i2 + 1) + d->map.shiftx * i1 , (d->map.gapy + d->map.uny * (i1 + 1)), 0x00FF0000, d); // Y2 lines
-// 			put_line(d->map.gapx + d->map.unx * i2 + d->map.shiftx * i1 , d->map.gapy + d->map.uny * i1, d->map.gapx + d->map.unx * i2 + d->map.shiftx * i1 + d->map.shiftx * i1 , (d->map.gapy + d->map.uny * (i1 + 1)), 0x035F3000, d); // X2 lines
+// 			// put_line(d->m.gapx + d->m.unx * i2, d->m.gapy + d->m.uny * i1, d->m.gapx + d->m.unx * (i2 + 1), d->m.gapy + d->m.uny * (i1 + 1), 0x00FF0000, d);
+// 			// put_line((d->m.gapx + d->m.unx * i2) + d->m.iso, (d->m.gapy + d->m.uny * i1) - d->m.iso, (d->m.gapx + d->m.unx * (i2 + 1)) + d->m.iso, (d->m.gapy + d->m.uny * i1) - d->m.iso, 0x00FF0000, d); // X lines
+// 			// put_line((d->m.gapx + d->m.unx * i2) + d->m.iso, (d->m.gapy + d->m.uny * i1) + d->m.iso, (d->m.gapx + d->m.unx * i2) + d->m.iso , (d->m.gapy + d->m.uny * (i1 + 1)) + d->m.iso, 0x00FF0000, d); // Y lines
+// 			// put_line((d->m.gapx + d->m.unx * i2)+ d->m.iso, (d->m.gapy + d->m.uny * i1), (d->m.gapx + d->m.unx * (i2 + 1)) + d->m.iso, (d->m.gapy + d->m.uny * i1), 0x00FF0000, d); // X lines
+// 			// put_line(d->m.gapx + d->m.unx * i2 + d->m.shiftx * i1 , (d->m.gapy + d->m.uny * i1) + d->m.iso, (d->m.gapx + d->m.unx * i2) + d->m.iso , (d->m.gapy + d->m.uny * (i1 + 1)) + d->m.iso, 0x00FF0000, d); // Y lines
+// 			put_line(d->m.gapx + d->m.unx * i2 + d->m.shiftx * i1 , d->m.gapy + d->m.uny * i1, d->m.gapx + d->m.unx * (i2 + 1) + d->m.shiftx * i1 , (d->m.gapy + d->m.uny * (i1 + 1)), 0x00FF0000, d); // Y2 lines
+// 			put_line(d->m.gapx + d->m.unx * i2 + d->m.shiftx * i1 , d->m.gapy + d->m.uny * i1, d->m.gapx + d->m.unx * i2 + d->m.shiftx * i1 + d->m.shiftx * i1 , (d->m.gapy + d->m.uny * (i1 + 1)), 0x035F3000, d); // X2 lines
 // 			i2+= 2;
 // 		}
 // 		i2 = 0;
@@ -320,25 +320,25 @@
 // 	int	endy = 0;
 
 
-// 	d->map.unx = d->img.rx / (d->map.size_x + 20);
-// 	d->map.uny = d->map.unx;
-// 	d->map.gapx =  d->map.unx;
-// 	d->map.gapy =  d->map.gapx;
-// 	d->map.iso = 2;
-// 	d->map.shiftx = 2 * d->map.unx;
-// 	d->map.shifty = 1;
-// 	while (i1 < d->map.size_y)
+// 	d->m.unx = d->img.rx / (d->m.size_x + 20);
+// 	d->m.uny = d->m.unx;
+// 	d->m.gapx =  d->m.unx;
+// 	d->m.gapy =  d->m.gapx;
+// 	d->m.iso = 2;
+// 	d->m.shiftx = 2 * d->m.unx;
+// 	d->m.shifty = 1;
+// 	while (i1 < d->m.size_y)
 // 	{
-// 		while (i2 < d->map.size_x * 1)
+// 		while (i2 < d->m.size_x * 1)
 // 		{
-// 			startx = d->map.gapx + d->map.unx * i2 + d->map.shiftx * i1;
-// 			starty = d->map.gapy + d->map.uny * i1;
-// 			endx = d->map.gapx + d->map.unx * (i2 + 1) + d->map.shiftx * i1;
-// 			endy = (d->map.gapy + d->map.uny * (i1 + 1));
+// 			startx = d->m.gapx + d->m.unx * i2 + d->m.shiftx * i1;
+// 			starty = d->m.gapy + d->m.uny * i1;
+// 			endx = d->m.gapx + d->m.unx * (i2 + 1) + d->m.shiftx * i1;
+// 			endy = (d->m.gapy + d->m.uny * (i1 + 1));
 
 // 			put_line(startx , starty, endx , endy, 0x00FF0000, d); // Y lines
-// 			// put_line(d->map.gapx + d->map.unx * i2 + d->map.shiftx * i1 , d->map.gapy + d->map.uny * i1, d->map.gapx + d->map.unx * (i2 + 1) + d->map.shiftx * i1 , (d->map.gapy + d->map.uny * (i1 + 1)), 0x00FF0000, d); // Y2 lines
-// 			// put_line(d->map.gapx + d->map.unx * i2 + d->map.shiftx * i1 , d->map.gapy + d->map.uny * i1, d->map.gapx + d->map.unx * i2 + d->map.shiftx * i1 + d->map.shiftx * i1 , (d->map.gapy + d->map.uny * (i1 + 1)), 0x035F3000, d); // X2 lines
+// 			// put_line(d->m.gapx + d->m.unx * i2 + d->m.shiftx * i1 , d->m.gapy + d->m.uny * i1, d->m.gapx + d->m.unx * (i2 + 1) + d->m.shiftx * i1 , (d->m.gapy + d->m.uny * (i1 + 1)), 0x00FF0000, d); // Y2 lines
+// 			// put_line(d->m.gapx + d->m.unx * i2 + d->m.shiftx * i1 , d->m.gapy + d->m.uny * i1, d->m.gapx + d->m.unx * i2 + d->m.shiftx * i1 + d->m.shiftx * i1 , (d->m.gapy + d->m.uny * (i1 + 1)), 0x035F3000, d); // X2 lines
 // 			i2+= 1;
 // 		}
 // 		i2 = 0;
@@ -400,7 +400,7 @@
 // 	d->v.len = 50;
 // 	d->v.ang = 30;
 // 	put_vector_ang(d);
-// 	while (i++ < d->map.size_y)
+// 	while (i++ < d->m.size_y)
 // 	{
 // 		d->v.start.x = d->v.end.x;
 // 		d->v.start.y = d->v.end.y;
@@ -453,30 +453,30 @@
 // 	int	end__y = 0;
 
 
-// 	d->map.unx = d->img.rx / (d->map.size_x * 3);
-// 	d->map.uny = d->map.unx - 25;
-// 	d->map.gapx =  d->map.unx * 15;
-// 	d->map.gapy =  d->map.uny * 2;
-// 	d->map.shiftx = round(-10);
-// 	d->map.shifty = round(1);
-// 	startx = d->map.gapx;
-// 	starty = d->map.gapy;
-// 	end__x = startx + d->map.unx;
-// 	end__y = starty;// + d->map.uny;
+// 	d->m.unx = d->img.rx / (d->m.size_x * 3);
+// 	d->m.uny = d->m.unx - 25;
+// 	d->m.gapx =  d->m.unx * 15;
+// 	d->m.gapy =  d->m.uny * 2;
+// 	d->m.shiftx = round(-10);
+// 	d->m.shifty = round(1);
+// 	startx = d->m.gapx;
+// 	starty = d->m.gapy;
+// 	end__x = startx + d->m.unx;
+// 	end__y = starty;// + d->m.uny;
 // 	// put_line(startx , starty, end__x , end__y, 0x035F3000, d);
-// 	while (i1 <= d->map.size_y) //Y incr)
+// 	while (i1 <= d->m.size_y) //Y incr)
 // 	{
-// 		while (i2 <= d->map.size_x) //X incr
+// 		while (i2 <= d->m.size_x) //X incr
 // 		{
-// 			startx += d->map.unx;// + d->map.shiftx * i1;
-// 			end__x = startx + d->map.unx;
+// 			startx += d->m.unx;// + d->m.shiftx * i1;
+// 			end__x = startx + d->m.unx;
 // 			put_line(startx , starty, end__x , end__y, 0x00F50000, d); // X lines
-// 			put_line(startx , starty, startx + d->map.shiftx, starty + d->map.uny * d->map.shifty, 0x011F8000, d); // Y lines
+// 			put_line(startx , starty, startx + d->m.shiftx, starty + d->m.uny * d->m.shifty, 0x011F8000, d); // Y lines
 // 			i2 += 1; 
 // 		}
-// 		starty += d->map.uny ;
+// 		starty += d->m.uny ;
 // 		end__y = starty;
-// 		startx = d->map.gapx + d->map.shiftx * i1;
+// 		startx = d->m.gapx + d->m.shiftx * i1;
 // 		i2 = 1;
 // 		i1+= 1;
 // 	}
@@ -486,7 +486,7 @@
 // {
 // 	int i1 = 0;
 // 	int i2 = 0;
-// 	d->map.un = d->img.rx / (d->map.size_x + 4);
+// 	d->m.un = d->img.rx / (d->m.size_x + 4);
 	
 // 	// while (i < 10)
 // 	// {
@@ -495,9 +495,9 @@
 // 	// }
 
 	// put_vector_br(d->v.x1, d->v.x1, d->v.ang, d->v.len,  d->v.col, d);
-	// while (i1 < d->map.size_y)
+	// while (i1 < d->m.size_y)
 	// {
-	// 	while (i2 < d->map.size_x)
+	// 	while (i2 < d->m.size_x)
 	// 		{
 	// 			put_vector(200, 200, 75, 300, 0x035F3000, d);
 	// 			i2++;
@@ -544,9 +544,9 @@
 // 	d->v.start.y = d->v.orig.y;
 // 	d->v.col = 0x00FF0000;	
 // 	d->v.len = 20;
-// 	while (i1++ < d->map.size_y)
+// 	while (i1++ < d->m.size_y)
 // 	{
-// 		while (i2++ < d->map.size_x)
+// 		while (i2++ < d->m.size_x)
 // 		{
 // 			v_end_calc(&d->v, a);
 // 			put_line(d->v.start.x, d->v.start.y, d->v.end.x, d->v.end.y, d->v.col, d);
@@ -571,32 +571,32 @@
 // 	int	i2 = 0;
 // 	int	c = 0;
 
-// 	d->map.current = d->map.lhead;
-// 	numeric = malloc(sizeof(int *) * d->map.size_y);
+// 	d->m.current = d->m.lhead;
+// 	numeric = malloc(sizeof(int *) * d->m.size_y);
 // 	if (!numeric)
 // 		return (-1);
-// 	while (i1 < d->map.size_y)
+// 	while (i1 < d->m.size_y)
 // 	{
-// 		numeric[i1] = malloc(sizeof(int) * d->map.size_x);
+// 		numeric[i1] = malloc(sizeof(int) * d->m.size_x);
 // 		if (!numeric[i1])
 // 			return (-1);
-// 		while (i2 < d->map.size_x)
+// 		while (i2 < d->m.size_x)
 // 		{
-// 			// printf("%c ", d->map.current->line[c]);
-// 			numeric[i1][i2] = val(&d->map.current->line[c]);
-// 			while (ft_isdigit(d->map.current->line[c]) || d->map.current->line[c] == '-')
+// 			// printf("%c ", d->m.current->line[c]);
+// 			numeric[i1][i2] = val(&d->m.current->line[c]);
+// 			while (ft_isdigit(d->m.current->line[c]) || d->m.current->line[c] == '-')
 // 				c++;
-// 			while (d->map.current->line[c] == ' ')
+// 			while (d->m.current->line[c] == ' ')
 // 				c++;
 // 			i2++;
 // 		}
 // 		// printf("\n");
-// 		d->map.current = d->map.current->next;
+// 		d->m.current = d->m.current->next;
 // 		i2 = 0;
 // 		c = 0;
 // 		i1++;
 // 	}
-// 	d->map.array = numeric;
+// 	d->m.array = numeric;
 // 	return (0);
 // }
 
@@ -608,35 +608,35 @@
 // 	int	i3 = 0;
 // 	int	c = 0;
 	
-// 	d->map.size_z = 3;
-// 	d->map.current = d->map.lhead;
-// 	d->map.l = malloc(sizeof(int**) * d->map.size_x);
-// 	while (i1 < d->map.size_x)
+// 	d->m.size_z = 3;
+// 	d->m.current = d->m.lhead;
+// 	d->m.l = malloc(sizeof(int**) * d->m.size_x);
+// 	while (i1 < d->m.size_x)
 // 	{
-// 		d->map.l[i1] = malloc(sizeof(int*) * d->map.size_y);
-// 		while (i2 < d->map.size_y)
+// 		d->m.l[i1] = malloc(sizeof(int*) * d->m.size_y);
+// 		while (i2 < d->m.size_y)
 // 		{
-// 			while (i3 < d->map.size_z)
+// 			while (i3 < d->m.size_z)
 // 			{
-// 				d->map.l[i3] = malloc(sizeof(int) * d->map.size_z);
-// 				// printf("%c ", d->map.current->line[c]);
-// 				d->map.l[i1][i2][i3] = val(&d->map.current->line[c]);
-// 				while (ft_isdigit(d->map.current->line[c]) || d->map.current->line[c] == '-')
+// 				d->m.l[i3] = malloc(sizeof(int) * d->m.size_z);
+// 				// printf("%c ", d->m.current->line[c]);
+// 				d->m.l[i1][i2][i3] = val(&d->m.current->line[c]);
+// 				while (ft_isdigit(d->m.current->line[c]) || d->m.current->line[c] == '-')
 // 					c++;
-// 				while (d->map.current->line[c] == ' ')
+// 				while (d->m.current->line[c] == ' ')
 // 					c++;
 // 				i3++;
 // 			}
 // 				i2++;
 // 		}
 // 		// printf("\n");
-// 		d->map.current = d->map.current->next;
+// 		d->m.current = d->m.current->next;
 // 		i2 = 0;
 // 		c = 0;
 // 		i1++;
 // 	}
 
-// 	d->map.array = numeric;
+// 	d->m.array = numeric;
 // 	return (0);
 // }
 
@@ -656,11 +656,11 @@
 // 	d->v.start.y = d->v.orig.y;
 // 	d->v.col = 0x00FF0000;	
 // 	d->v.len = 20;
-// 	while (i1 < d->map.size_y)
+// 	while (i1 < d->m.size_y)
 // 	{
-// 		while (i2 < d->map.size_x)
+// 		while (i2 < d->m.size_x)
 // 		{
-// 			printf("%d ,", d->map.array[i1][i2]);
+// 			printf("%d ,", d->m.array[i1][i2]);
 // 			v_end_calc(&d->v, a, d->v.len);
 // 			put_line(d->v.start.x, d->v.start.y, d->v.end.x, d->v.end.y, d->v.col, d);
 // 			v_end_calc(&d->v, a + 90 - fa * 2, d->v.len);
@@ -695,11 +695,11 @@
 // 	d->v.start.y = d->v.orig.y;
 // 	d->v.col = 0x00FF0000;	
 // 	d->v.len = 20;
-// 	while (i1 < d->map.size_y)
+// 	while (i1 < d->m.size_y)
 // 	{
-// 		while (i2 < d->map.size_x)
+// 		while (i2 < d->m.size_x)
 // 		{
-// 			printf("%d ,", d->map.array[i1][i2]);
+// 			printf("%d ,", d->m.array[i1][i2]);
 // 			v_end_calc(&d->v, a, d->v.len);
 // 			// apply_z
 // 			put_line(d->v.start.x, d->v.start.y, d->v.end.x, d->v.end.y, d->v.col, d);
@@ -728,27 +728,27 @@
 // 	int	i3 = 0;
 // 	int	in = 0;
 // 	int	c = 0;
-// 	// int	size = d->map.size_x * d->map.size_y;
+// 	// int	size = d->m.size_x * d->m.size_y;
 	
-// 	vect = malloc(sizeof(vect) * d->map.size_x * d->map.size_y + 1);
+// 	vect = malloc(sizeof(vect) * d->m.size_x * d->m.size_y + 1);
 // 	if (!vect)
 // 		return (NULL);
-// 	d->map.current = d->map.lhead;
-// 	while (i1 < d->map.size_x * d->map.size_y)
+// 	d->m.current = d->m.lhead;
+// 	while (i1 < d->m.size_x * d->m.size_y)
 // 	{
-// 		while (i2 < d->map.size_x)
+// 		while (i2 < d->m.size_x)
 // 		{
 // 			vect[i1].x = i1;
 // 			vect[i1].y = i3;
-// 			vect[i1].z = val(&d->map.current->line[c]);
-// 			while (ft_isdigit(d->map.current->line[c]) || d->map.current->line[c] == '-')
+// 			vect[i1].z = val(&d->m.current->line[c]);
+// 			while (ft_isdigit(d->m.current->line[c]) || d->m.current->line[c] == '-')
 // 				c++;
-// 			while (d->map.current->line[c] == ' ')
+// 			while (d->m.current->line[c] == ' ')
 // 				c++;
 // 			i1++;
 // 			i2++;
 // 		}
-// 		d->map.current = d->map.current->next;
+// 		d->m.current = d->m.current->next;
 // 		i3++;
 // 		c = 0;
 // 		i2 = 0;
@@ -772,11 +772,11 @@
 // 	d->v.start.y = d->v.orig.y;
 // 	d->v.col = 0x00FF0000;	
 // 	d->v.len = 20;
-// 	while (i1 < d->map.size_y)
+// 	while (i1 < d->m.size_y)
 // 	{
-// 		while (i2 < d->map.size_x)
+// 		while (i2 < d->m.size_x)
 // 		{
-// 			// printf("%d ,", d->map.array[i1][i2]);
+// 			// printf("%d ,", d->m.array[i1][i2]);
 // 			v_end_calc(&d->v, a, d->v.len);
 // 			// apply_z
 // 			put_line(d->v.start.x, d->v.start.y, d->v.end.x, d->v.end.y, d->v.col, d);
@@ -804,17 +804,17 @@
 		// d->vs[i + 1].y = round(d->vs[0].y + len * 1 * sin(ang * CONST));
 		// else
 		// {
-		// 	// if (i == 0 || i % (d->map.size_x) == 1)
+		// 	// if (i == 0 || i % (d->m.size_x) == 1)
 		// 	// {
 		// 	// 	d->vs[i].x = round(d->vs[i - 1].x + len * 1 * cos(ang * CONST));
 		// 	// 	d->vs[i].y = round(d->vs[i - 1].y + len * 1 * sin(ang * CONST));
 		// 	// }
 		// }
 		// i++;
-			// printf ("i:%d, (i + 1)/(d->map.size_x):%d \n", i, (i + 1) % (d->map.size_x));
-		// d->vs[i + d->map.size_x].y = round(d->vs[i - 1].x + len * 1 * cos((ang + 90) * CONST));
-		// d->vs[i + d->map.size_x].y = round(d->vs[i - 1].y + len * 1 * sin((ang + 90) * CONST));
-		// printf ("i:%d, (i + 1)/(d->map.size_x):%d \n", i, (i + 1) % (d->map.size_x));
+			// printf ("i:%d, (i + 1)/(d->m.size_x):%d \n", i, (i + 1) % (d->m.size_x));
+		// d->vs[i + d->m.size_x].y = round(d->vs[i - 1].x + len * 1 * cos((ang + 90) * CONST));
+		// d->vs[i + d->m.size_x].y = round(d->vs[i - 1].y + len * 1 * sin((ang + 90) * CONST));
+		// printf ("i:%d, (i + 1)/(d->m.size_x):%d \n", i, (i + 1) % (d->m.size_x));
 		// d->vs[i].x = round(d->vs[i - 1].x + len * 1 * cos(ang * CONST));
 		// d->vs[i].y = round(d->vs[i - 1].y + len * 1 * sin(ang * CONST));
 

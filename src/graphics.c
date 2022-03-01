@@ -6,7 +6,7 @@
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/27 17:55:01 by dkocob        #+#    #+#                 */
-/*   Updated: 2022/03/01 17:36:48 by dkocob        ########   odam.nl         */
+/*   Updated: 2022/03/01 18:05:25 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,36 +75,6 @@ void	bresenham_ (int x1, int y1, int x2, int y2, int col, struct s_data *d)
 	}
 }
 
-
-
-int	center(struct s_data *d)
-{
-	get_size(d);
-	while (d->map.start.x > (d->img.rx - (d->map.maxx - d->map.minx)) / 4)
-		d->map.start.x--;
-	while (d->map.start.x < (d->img.rx - (d->map.maxx - d->map.minx)) / 4)
-		d->map.start.x++;
-	// while (d->img.rx - (d->map.maxx - d->map.minx) != d->img.rx / 2)
-	// {
-	// 	if (d->img.rx - (d->map.maxx - d->map.minx))
-	// 	d->map.start.x--;
-	// while (d->img.rx - (d->map.maxx - d->map.minx) >= d->img.rx / 2)
-	// 	d->map.start.x++;
-	// }
-	// float size = get_size(d);
-
-	// while (d->map.size_x * d->map.un != d->img.rx)
-	
-	// || d->map.size_y * d->map.un < d->img.ry)
-	return (0);
-}
-
-void	adjust_scale(struct s_data *d)
-{
-	// while (d->map.)
-	// while (d->map.size_x * d->map.un < d->img.rx || d->map.size_y * d->map.un < d->img.ry)
-}
-
 int	put_line(int x1, int y1, int x2, int y2, int col, struct s_data *d)
 {
 	order_int(&x1, &y1, &x2, &y2);
@@ -117,12 +87,12 @@ void	map_draw(struct s_data *d)
 	int	i = 0;
 	
 	img_clear(0x00000000, d);
-	while (i < d->map.size_x * d->map.size_y)
+	while (i < d->m.szx * d->m.szy)
 	{
-		if (i % (d->map.size_x) != d->map.size_x - 1)
-			put_line(d->vs[i].x, d->vs[i].y, d->vs[i + 1].x, d->vs[i + 1].y, 0x00FF0000, d); // x
-		if (i > d->map.size_x - 1)
-			put_line(d->vs[i].x, d->vs[i].y, d->vs[i - d->map.size_x].x, d->vs[i - d->map.size_x].y, 0x00F08000, d); // y
+		if (i % (d->m.szx) != d->m.szx - 1)
+			put_line(d->vs[i].x, d->vs[i].y, d->vs[i + 1].x, d->vs[i + 1].y, 0x00FF0000, d);
+		if (i > d->m.szx - 1)
+			put_line(d->vs[i].x, d->vs[i].y, d->vs[i - d->m.szx].x, d->vs[i - d->m.szx].y, 0x00F08000, d); 
 		i++;
 	}
 	mlx_put_image_to_window(d->mlx, d->win, d->img.img, 0, 0);

@@ -6,7 +6,7 @@
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/21 20:46:31 by dkocob        #+#    #+#                 */
-/*   Updated: 2022/03/01 16:48:02 by dkocob        ########   odam.nl         */
+/*   Updated: 2022/03/01 17:41:35 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ int	val16(char *s)
 			pwr = pwr * 10;
 		}
 		i--;
-		// printf(" %d, ", res);
 	}
 
 	return (res);

@@ -6,7 +6,7 @@
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/20 17:54:41 by dkocob        #+#    #+#                 */
-/*   Updated: 2022/02/26 18:40:14 by dkocob        ########   odam.nl         */
+/*   Updated: 2022/03/01 18:07:56 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,50 +30,39 @@ int	order_int(int *x1, int *y1, int *x2, int *y2)
 
 void	map_rotate(struct s_data *d)
 {
-	int	i = 0;
+	int	i;
 
-	d->vs[0].x = d->map.start.x;
-	d->vs[0].y = d->map.start.y;
-	while (i < d->map.size_x * d->map.size_y)
+	i = 0;
+	d->vs[0].x = d->m.start.x;
+	d->vs[0].y = d->m.start.y;
+	while (i < d->m.szx * d->m.szy)
 	{
-		if (i > 0 && i % d->map.size_x == 0)
+		if (i > 0 && i % d->m.szx == 0)
 		{
-			d->vs[i].x = round(d->vs[i - d->map.size_x].x + d->map.un * cos((d->map.rot) * CONST));
-			d->vs[i].y = round(d->vs[i - d->map.size_x].y + d->map.un * d->map.iso * sin((d->map.rot) * CONST));
+			d->vs[i].x = round(d->vs[i - d->m.szx].x + d->m.un
+					* cos((d->m.rot) * R));
+			d->vs[i].y = round(d->vs[i - d->m.szx].y + d->m.un
+					* d->m.iso * sin((d->m.rot) * R));
 		}
-		d->vs[i + 1].x = round(d->vs[i].x + d->map.un * cos(d->map.rot * CONST));
-		d->vs[i + 1].y = round(d->vs[i].y + d->map.un * sin(d->map.rot * CONST));
+		d->vs[i + 1].x = round(d->vs[i].x + d->m.un * cos(d->m.rot * R));
+		d->vs[i + 1].y = round(d->vs[i].y + d->m.un * sin(d->m.rot * R));
 		i++;
 	}
 }
-// void	map_rotate(struct s_data *d)
-// {
-// 	int	i = 0;
-
-// 	d->vs[0].x = d->map.start.x;
-// 	d->vs[0].y = d->map.start.y;
-// 	while (i < d->map.size_x * d->map.size_y)
-// 	{
-// 		if (i > 0 && i % d->map.size_x == 0)
-// 		{
-// 			d->vs[i].x = round(d->vs[i - d->map.size_x].x + d->map.un * cos((d->map.rot + 90) * CONST));
-// 			d->vs[i].y = round(d->vs[i - d->map.size_x].y + d->map.un * d->map.iso * sin((d->map.rot + 90) * CONST));
-// 		}
-// 		d->vs[i + 1].x = round(d->vs[i].x + d->map.un * cos(d->map.rot * CONST));
-// 		d->vs[i + 1].y = round(d->vs[i].y + d->map.un * sin(d->map.rot * CONST));
-// 		i++;
-// 	}
-// }
 
 void	map_apply_z(struct s_data *d)
 {
-	int	i = 0;
-	int	ang = d->map.rot - 90;
+	int	i;
+	int	ang;
 
-	while (i < d->map.size_x * d->map.size_y)
+	i = 0;
+	ang = d->m.rot - 90;
+	while (i < d->m.szx * d->m.szy)
 	{
-		d->vs[i].x = round(d->vs[i].x + d->map.un * d->vs[i].z * d->map.zoom * cos(ang * CONST));
-		d->vs[i].y = round(d->vs[i].y + d->map.un * d->vs[i].z * d->map.zoom * sin(ang * CONST));
+		d->vs[i].x = round(d->vs[i].x + d->m.un * d->vs[i].z
+				* d->m.zoom * cos(ang * R));
+		d->vs[i].y = round(d->vs[i].y + d->m.un * d->vs[i].z
+				* d->m.zoom * sin(ang * R));
 		i++;
 	}
 }
