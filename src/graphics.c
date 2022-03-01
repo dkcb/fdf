@@ -6,7 +6,7 @@
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/27 17:55:01 by dkocob        #+#    #+#                 */
-/*   Updated: 2022/02/26 18:41:33 by dkocob        ########   odam.nl         */
+/*   Updated: 2022/03/01 17:36:48 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,9 +131,6 @@ void	map_draw(struct s_data *d)
 void	render(struct s_data *d)
 {
 	map_rotate(d);
-	// map_apply_z(d);
-	// center(d);
-	// map_rotate(d);
 	map_apply_z(d);
 	map_draw(d);
 }

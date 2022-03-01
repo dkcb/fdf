@@ -6,7 +6,7 @@
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/21 19:00:06 by dkocob        #+#    #+#                 */
-/*   Updated: 2022/03/01 16:33:22 by dkocob        ########   odam.nl         */
+/*   Updated: 2022/03/01 17:20:38 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ size_t	c_cnt(char *s, char c)
 	return (i2);
 }
 
-struct s_node	*vlist(struct s_data *d)
+struct s_p	*vlist(struct s_data *d)
 {
 	int	i1 = 0;
 	int	i2 = 0;
@@ -47,7 +47,7 @@ struct s_node	*vlist(struct s_data *d)
 	int	max = 0;
 	int	min = 0;
 	
-	d->vs = malloc(sizeof(struct s_node) * d->map.size_x * d->map.size_y);
+	d->vs = malloc(sizeof(struct s_p) * d->map.size_x * d->map.size_y);
 	if (!d->vs)
 		return (NULL);
 	d->map.current = d->map.lhead;
@@ -68,7 +68,7 @@ struct s_node	*vlist(struct s_data *d)
 				d->vs[i1].col = val16(&d->map.current->line[c]);
 				while (d->map.current->line[c] != ' ')
 				c++;
-				printf(" %X, ", d->vs[i1].col);
+				// printf(" %X, ", d->vs[i1].col);
 			}
 			while (d->map.current->line[c] == ' ')
 				c++;
@@ -109,7 +109,7 @@ void	draw_vector_struct(struct s_data *d)
 	int i = 0;
 	while (i < d->map.size_x * d->map.size_y)
 	{
-		printf ("%d|, ", d->vs[i].z);
+		printf ("%f|, ", d->vs[i].z);
 		if ((i + 1) % (d->map.size_x) == 0)
 			printf("\n");
 		i++;

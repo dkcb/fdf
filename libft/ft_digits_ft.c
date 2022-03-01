@@ -6,7 +6,7 @@
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/21 20:46:31 by dkocob        #+#    #+#                 */
-/*   Updated: 2022/03/01 16:31:41 by dkocob        ########   odam.nl         */
+/*   Updated: 2022/03/01 16:48:02 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	ft_isdigit(char c)
 
 int	ft_isdigit16(char c)
 {
-	if ((c >= '0' && c <= '9') || (c >= 'a' && c <= 'f'))
+	if ((c >= '0' && c <= '9') || (c >= 'A' && c <= 'F'))
 		return (1);
 	return (0);
 }
@@ -69,13 +69,15 @@ int	val16(char *s)
 	while (s[i] && ft_isdigit16(s[i]))
 	{
 		if (s[i] > 9)
-			res = res + (s[i] - 50) * pwr;
+			res = res + (s[i] - 55) * pwr;
 		else
 		{
 			res = res + (s[i] - '0') * pwr;
 			pwr = pwr * 10;
 		}
 		i--;
+		// printf(" %d, ", res);
 	}
+
 	return (res);
 }

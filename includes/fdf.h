@@ -6,7 +6,7 @@
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/21 19:08:11 by dkocob        #+#    #+#                 */
-/*   Updated: 2022/03/01 15:36:22 by dkocob        ########   odam.nl         */
+/*   Updated: 2022/03/01 17:30:21 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,30 +21,6 @@
 #define X_REZ 1024
 #define Y_REZ 768
 #define CONST 0.0174533
-
-typedef struct s_node {
-	int				x;
-	int				y;
-	int				z;
-	unsigned int	col;
-}	t_node;
-
-typedef struct s_cube {
-	int				startx;
-	int				starty;
-	int				side;
-	int				rotx;
-	int				roty;
-	int 			rotz;
-	unsigned int	col;
-}	t_cube;
-
-struct	s_cam {
-	double			rotx;
-	double			roty;
-	double			rotz;
-	double			zoom;
-};
 
 struct	s_p {
 	double			x;
@@ -79,8 +55,8 @@ struct	s_map {
 	int				rot;
 	float			zoom;
 	float			iso;
-	struct s_node	start;
-	struct s_node	*v;
+	struct s_p	start;
+	struct s_p	*v;
 	struct s_line	*lhead;
 	struct s_line	*current;
 };
@@ -95,19 +71,13 @@ struct	s_img {
 	int				ry;
 };
 
-struct	s_obj {
-	int				x;
-	int				y;
-	int				col;
-};
-
 struct	s_mouse {
 	int				pr;
 	int				px;
 	int				py;
-	int				dfpx;
-	int				dfpy;
-	int				mrl;
+	// int				dfpx;
+	// int				dfpy;
+	// int				mrl;
 };
 
 struct	s_data {
@@ -118,7 +88,7 @@ struct	s_data {
 	struct s_img	img;
 	struct s_p		p;
 	struct s_v		v;
-	struct s_node	*vs;
+	struct s_p		*vs;
 };
 
 int		center(struct s_data *d);
