@@ -6,7 +6,7 @@
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/06/05 17:10:10 by dkocob        #+#    #+#                 */
-/*   Updated: 2022/03/01 17:48:10 by dkocob        ########   odam.nl         */
+/*   Updated: 2022/03/03 16:35:33 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -571,7 +571,7 @@
 // 	int	i2 = 0;
 // 	int	c = 0;
 
-// 	d->m.current = d->m.lhead;
+// 	d->m.cur = d->m.lhead;
 // 	numeric = malloc(sizeof(int *) * d->m.size_y);
 // 	if (!numeric)
 // 		return (-1);
@@ -582,16 +582,16 @@
 // 			return (-1);
 // 		while (i2 < d->m.size_x)
 // 		{
-// 			// printf("%c ", d->m.current->line[c]);
-// 			numeric[i1][i2] = val(&d->m.current->line[c]);
-// 			while (ft_isdigit(d->m.current->line[c]) || d->m.current->line[c] == '-')
+// 			// printf("%c ", d->m.cur->line[c]);
+// 			numeric[i1][i2] = val(&d->m.cur->line[c]);
+// 			while (ft_isdigit(d->m.cur->line[c]) || d->m.cur->line[c] == '-')
 // 				c++;
-// 			while (d->m.current->line[c] == ' ')
+// 			while (d->m.cur->line[c] == ' ')
 // 				c++;
 // 			i2++;
 // 		}
 // 		// printf("\n");
-// 		d->m.current = d->m.current->next;
+// 		d->m.cur = d->m.cur->next;
 // 		i2 = 0;
 // 		c = 0;
 // 		i1++;
@@ -609,7 +609,7 @@
 // 	int	c = 0;
 	
 // 	d->m.size_z = 3;
-// 	d->m.current = d->m.lhead;
+// 	d->m.cur = d->m.lhead;
 // 	d->m.l = malloc(sizeof(int**) * d->m.size_x);
 // 	while (i1 < d->m.size_x)
 // 	{
@@ -619,18 +619,18 @@
 // 			while (i3 < d->m.size_z)
 // 			{
 // 				d->m.l[i3] = malloc(sizeof(int) * d->m.size_z);
-// 				// printf("%c ", d->m.current->line[c]);
-// 				d->m.l[i1][i2][i3] = val(&d->m.current->line[c]);
-// 				while (ft_isdigit(d->m.current->line[c]) || d->m.current->line[c] == '-')
+// 				// printf("%c ", d->m.cur->line[c]);
+// 				d->m.l[i1][i2][i3] = val(&d->m.cur->line[c]);
+// 				while (ft_isdigit(d->m.cur->line[c]) || d->m.cur->line[c] == '-')
 // 					c++;
-// 				while (d->m.current->line[c] == ' ')
+// 				while (d->m.cur->line[c] == ' ')
 // 					c++;
 // 				i3++;
 // 			}
 // 				i2++;
 // 		}
 // 		// printf("\n");
-// 		d->m.current = d->m.current->next;
+// 		d->m.cur = d->m.cur->next;
 // 		i2 = 0;
 // 		c = 0;
 // 		i1++;
@@ -733,22 +733,22 @@
 // 	vect = malloc(sizeof(vect) * d->m.size_x * d->m.size_y + 1);
 // 	if (!vect)
 // 		return (NULL);
-// 	d->m.current = d->m.lhead;
+// 	d->m.cur = d->m.lhead;
 // 	while (i1 < d->m.size_x * d->m.size_y)
 // 	{
 // 		while (i2 < d->m.size_x)
 // 		{
 // 			vect[i1].x = i1;
 // 			vect[i1].y = i3;
-// 			vect[i1].z = val(&d->m.current->line[c]);
-// 			while (ft_isdigit(d->m.current->line[c]) || d->m.current->line[c] == '-')
+// 			vect[i1].z = val(&d->m.cur->line[c]);
+// 			while (ft_isdigit(d->m.cur->line[c]) || d->m.cur->line[c] == '-')
 // 				c++;
-// 			while (d->m.current->line[c] == ' ')
+// 			while (d->m.cur->line[c] == ' ')
 // 				c++;
 // 			i1++;
 // 			i2++;
 // 		}
-// 		d->m.current = d->m.current->next;
+// 		d->m.cur = d->m.cur->next;
 // 		i3++;
 // 		c = 0;
 // 		i2 = 0;

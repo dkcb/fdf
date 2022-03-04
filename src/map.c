@@ -6,7 +6,7 @@
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/21 19:00:06 by dkocob        #+#    #+#                 */
-/*   Updated: 2022/03/01 18:10:37 by dkocob        ########   odam.nl         */
+/*   Updated: 2022/03/03 16:35:33 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,45 +40,44 @@ size_t	c_cnt(char *s, char c)
 
 struct s_p	*vlist(struct s_data *d)
 {
-	int	i1 = 0;
-	int	i2 = 0;
-	int	i3 = 0;
-	int	c = 0;
-	int	max = 0;
-	int	min = 0;
+	int	c;
 
+	c = 0;
+	d->i.i1 = 0;
+	d->i.i2 = 0;
+	d->i.i3 = 0;
 	d->vs = malloc(sizeof(struct s_p) * d->m.szx * d->m.szy);
 	if (!d->vs)
 		return (NULL);
-	d->m.current = d->m.lhead;
-	while (i1 < d->m.szx * d->m.szy)
+	d->m.cur = d->m.lhead;
+	while (d->i.i1 < d->m.szx * d->m.szy)
 	{
-		while (i2 < d->m.szx)
+		while (d->i.i2 < d->m.szx)
 		{
-			d->vs[i1].z = val(&d->m.current->line[c]);
-			if (d->vs[i1].z > max)
-				max = d->vs[i1].z;
-			if (d->vs[i1].z < min)
-				min = d->vs[i1].z;
-			while (ft_isdigit(d->m.current->line[c]) || d->m.current->line[c] == '-')
+			d->vs[d->i.i1].z = val(&d->m.cur->line[c]);
+			if (d->vs[d->i.i1].z > d->m.maxz)
+				d->m.maxz = d->vs[d->i.i1].z;
+			if (d->vs[d->i.i1].z < d->m.minz)
+				d->m.minz = d->vs[d->i.i1].z;
+			while (ft_isdigit(d->m.cur->line[c]) || d->m.cur->line[c] == '-')
 				c++;
-			if (d->m.current->line[c] == ',')
+			if (d->m.cur->line[c] == ',')
 			{
 				c += 3;
-				d->vs[i1].col = val16(&d->m.current->line[c]);
-				while (d->m.current->line[c] != ' ')
+				d->vs[d->i.i1].col = val16(&d->m.cur->line[c]);
+				while (d->m.cur->line[c] != ' ')
 				c++;
 			}
-			while (d->m.current->line[c] == ' ')
+			while (d->m.cur->line[c] == ' ')
 				c++;
-			i1++;
-			i2++;
+			d->i.i1++;
+			d->i.i2++;
 		}
-		d->m.current = d->m.current->next;
-		i3++;
+		d->m.cur = d->m.cur->next;
+		d->i.i3++;
 		c = 0;
-		i2 = 0;
-		d->m.zoom = (float)3 / (abs(min) + abs(max) + 0.01);
+		d->i.i2 = 0;
+		d->m.zoom = (float)3 / (abs(d->m.minz) + abs(d->m.maxz) + 0.01);
 	}
 	return (d->vs);
 }
@@ -94,36 +93,36 @@ int	get_arg_stack(struct s_data *d, char **line)
 	if (!d->m.lhead)
 	{
 		d->m.lhead = new;
-		d->m.current = new;
+		d->m.cur = new;
 		return (1);
 	}
-	d->m.current->next = new;
-	d->m.current = d->m.current->next;
+	d->m.cur->next = new;
+	d->m.cur = d->m.cur->next;
 	return (0);
 }
 
-void	get_size(struct s_data *d)
-{
-	int	i;
+// void	get_size(struct s_data *d)
+// {
+// 	int	i;
 
-	i = 0;
-	d->m.minx = 999999;
-	d->m.miny = 999999;
-	d->m.maxx = -999999;
-	d->m.maxy = -999999;
-	while (i < d->m.szx * d->m.szy)
-	{
-		if (d->vs[i].x < d->m.minx)
-			d->m.minx = d->vs[i].x;
-		if (d->vs[i].y < d->m.miny)
-			d->m.miny = d->vs[i].y;
-		if (d->vs[i].x > d->m.maxx)
-			d->m.maxx = d->vs[i].x;
-		if (d->vs[i].y > d->m.maxy)
-			d->m.maxy = d->vs[i].y;
-		i++;
-	}
-}
+// 	i = 0;
+// 	d->m.minx = 999999;
+// 	d->m.miny = 999999;
+// 	d->m.maxx = -999999;
+// 	d->m.maxy = -999999;
+// 	while (i < d->m.szx * d->m.szy)
+// 	{
+// 		if (d->vs[i].x < d->m.minx)
+// 			d->m.minx = d->vs[i].x;
+// 		if (d->vs[i].y < d->m.miny)
+// 			d->m.miny = d->vs[i].y;
+// 		if (d->vs[i].x > d->m.maxx)
+// 			d->m.maxx = d->vs[i].x;
+// 		if (d->vs[i].y > d->m.maxy)
+// 			d->m.maxy = d->vs[i].y;
+// 		i++;
+// 	}
+// }
 
 int	map_init(int fd, struct s_data *d)
 {
@@ -138,7 +137,7 @@ int	map_init(int fd, struct s_data *d)
 	}
 	d->m.szy = i;
 	d->m.szx = c_cnt(d->m.lhead->line, ' ');
-	d->m.current = d->m.lhead;
+	d->m.cur = d->m.lhead;
 	vlist(d);
 	i = 0;
 	return (1);

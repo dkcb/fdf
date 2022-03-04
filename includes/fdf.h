@@ -6,7 +6,7 @@
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/21 19:08:11 by dkocob        #+#    #+#                 */
-/*   Updated: 2022/03/01 18:03:34 by dkocob        ########   odam.nl         */
+/*   Updated: 2022/03/03 16:35:47 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,20 +47,23 @@ struct	s_m {
 	int				szx;
 	int				szy;
 	int				szz;
-	int				minx;
-	int				miny;
-	int				maxx;
-	int				maxy;
+	int				minz;
+	int				maxz;
 	float			un;
 	int				rot;
 	float			zoom;
 	float			iso;
-	struct s_p	start;
-	struct s_p	*v;
+	struct s_p		start;
+	struct s_p		*v;
 	struct s_line	*lhead;
-	struct s_line	*current;
+	struct s_line	*cur;
 };
 
+struct	s_misc {
+	int				i1;
+	int				i2;
+	int				i3;
+};
 struct	s_img {
 	void			*img;
 	char			*addr;
@@ -85,6 +88,7 @@ struct	s_data {
 	void			*mlx;
 	struct s_mouse	c;
 	struct s_m		m;
+	struct s_misc	i;
 	struct s_img	img;
 	struct s_p		p;
 	struct s_v		v;
