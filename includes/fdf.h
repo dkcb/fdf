@@ -6,7 +6,7 @@
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/21 19:08:11 by dkocob        #+#    #+#                 */
-/*   Updated: 2022/03/03 16:35:47 by dkocob        ########   odam.nl         */
+/*   Updated: 2022/03/08 18:55:46 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ struct	s_m {
 };
 
 struct	s_misc {
+	int				c;
 	int				i1;
 	int				i2;
 	int				i3;
@@ -96,6 +97,7 @@ struct	s_data {
 };
 
 int		center(struct s_data *d);
+void	assign_map_values(struct s_data *d);
 void	get_size(struct s_data *d);
 void	draw_vector_struct(struct s_data *d);
 void	img_clear(unsigned int col, struct s_data *d);

@@ -6,7 +6,7 @@
 #    By: dkocob <dkocob@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/08/25 13:57:19 by dkocob        #+#    #+#                  #
-#    Updated: 2021/12/16 21:42:57 by dkocob        ########   odam.nl          #
+#    Updated: 2022/03/08 19:04:56 by dkocob        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,8 @@ SRCS			= main.c \
 				get_next_line.c \
 				get_next_line_utils.c \
 				ft_digits_ft.c \
+				ft_distance_to_char.c \
+				ft_cnt_char.c \
 				graphics.c \
 				math.c \
 				hooks.c

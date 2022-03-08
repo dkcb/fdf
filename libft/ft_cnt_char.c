@@ -1,33 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   libft.h                                            :+:    :+:            */
+/*   ft_cnt_char.c                                      :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/08/17 15:29:12 by dkocob        #+#    #+#                 */
-/*   Updated: 2022/03/08 19:02:37 by dkocob        ########   odam.nl         */
+/*   Created: 2021/10/21 21:41:13 by dkocob        #+#    #+#                 */
+/*   Updated: 2022/03/08 19:01:14 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFT_H
-# define LIBFT_H
+#include "libft.h"
 
-# include <string.h>
-# include <stdlib.h>
-# include <unistd.h>
+size_t	c_cnt(char *s, char c)
+{
+	size_t	i;
+	size_t	i2;
 
-# ifndef OPEN_MAX
-#  define OPEN_MAX 32
-# endif
-
-size_t		c_cnt(char *s, char c);
-size_t		dc(char *s, char c);
-void		ft_putstring(char *s);
-void		ft_putstring_fd(char *s, int fd);
-int			ft_isdigit(char c);
-int			ft_isdigit16(char c);
-int 		val(char *s);
-int 		val16(char *s);
-
-#endif
+	i = 0;
+	i2 = 0;
+	while (s[i])
+	{
+		if (s[i] == c)
+			i2++;
+		i++;
+	}
+	return (i2);
+}
