@@ -6,7 +6,7 @@
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/27 17:55:01 by dkocob        #+#    #+#                 */
-/*   Updated: 2022/03/08 19:07:16 by dkocob        ########   odam.nl         */
+/*   Updated: 2022/03/10 17:51:34 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,70 +39,71 @@ void	put_pixel(int x, int y, int col, struct s_data *d)
 	}
 }
 
-void	bresenham_(int x1, int y1, int x2, int y2, int col, struct s_data *d)
+void	bresenham_(struct s_br *br, struct s_ln *ln, struct s_data *d)
 {
-	int	dx;
-	int	dy;
-	int	sx;
-	int	sy;
-	int	err;
-	int	e2;
-
-	dx = x2 - x1;
-	sx = 1;
-	dy = -1 * (y1 - y2);
-	sy = -1;
-	if (y2 > y1)
+	if (ln->y2 > ln->y1)
 	{
-		dy = -1 * (y2 - y1);
-		sy = 1;
+		br->dy = -1 * (ln->y2 - ln->y1);
+		br->sy = 1;
 	}
-	err = dx + dy;
-	while (x1 <= x2)
+	br->err = br->dx + br->dy;
+	while (ln->x1 <= ln->x2)
 	{
-		put_pixel(x1, y1, col, d);
-		if (x1 == x2 && y1 == y2)
+		put_pixel(ln->x1, ln->y1, ln->col, d);
+		if (ln->x1 == ln->x2 && ln->y1 == ln->y2)
 			break ;
-		e2 = 2 * err;
-		if (e2 >= dy)
+		br->e2 = 2 * br->err;
+		if (br->e2 >= br->dy)
 		{
-			err += dy;
-			x1 += sx;
+			br->err += br->dy;
+			ln->x1 += br->sx;
 		}
-		if (e2 <= dx)
+		if (br->e2 <= br->dx)
 		{
-			err += dx;
-			y1 += sy;
+			br->err += br->dx;
+			ln->y1 += br->sy;
 		}
 	}
 }
 
-int	put_line(int x1, int y1, int x2, int y2, int col, struct s_data *d)
+int	put_line(struct s_ln *ln, struct s_data *d)
 {
-	order_int(&x1, &y1, &x2, &y2);
-	bresenham_(x1, y1, x2, y2, col, d);
+	struct s_br	br;
+
+	order_int(&ln->x1, &ln->y1, &ln->x2, &ln->y2);
+	br.sx = 1;
+	br.sy = -1;
+	br.dx = ln->x2 - ln->x1;
+	br.dy = -1 * (ln->y1 - ln->y2);
+	bresenham_(&br, ln, d);
 	return (0);
 }
 
-void	map_draw(struct s_data *d)
+void	map_draw(int i, struct s_data *d)
 {
-	int	i;
+	struct s_ln	ln;
 
-	i = 0;
 	img_clear(0x00000000, d);
 	while (i < d->m.szx * d->m.szy)
 	{
 		if (i % (d->m.szx) != d->m.szx - 1)
 		{
-			put_line(d->vs[i].x, d->vs[i].y, d->vs[i + 1].x,
-				d->vs[i + 1].y, 0x00FF0000, d);
+			ln.x1 = d->vs[i].x;
+			ln.y1 = d->vs[i].y;
+			ln.x2 = d->vs[i + 1].x;
+			ln.y2 = d->vs[i + 1].y;
+			ln.col = 0x00FF0000;
+			put_line(&ln, d);
 		}
 		if (i > d->m.szx - 1)
 		{
-			put_line(d->vs[i].x, d->vs[i].y, d->vs[i - d->m.szx].x,
-				d->vs[i - d->m.szx].y, 0x00F08000, d);
+			ln.x1 = d->vs[i].x;
+			ln.y1 = d->vs[i].y;
+			ln.x2 = d->vs[i - d->m.szx].x;
+			ln.y2 = d->vs[i - d->m.szx].y;
+			ln.col = 0x00F08000;
+			put_line(&ln, d);
 		}
 		i++;
 	}
-	mlx_put_image_to_window(d->mlx, d->win, d->img.img, 0, 0);
 }

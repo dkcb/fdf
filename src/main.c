@@ -6,7 +6,7 @@
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/21 18:56:32 by dkocob        #+#    #+#                 */
-/*   Updated: 2022/03/08 19:06:10 by dkocob        ########   odam.nl         */
+/*   Updated: 2022/03/10 18:02:28 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	main(int argc, char **argv)
 	int				fd;
 	struct s_data	d;
 
-	fd = open("test_maps/42.fdf", O_RDONLY);
+	fd = open(argv[1], O_RDONLY);
 	if (!fd)
 		return (-1);
 	map_init(fd, &d);

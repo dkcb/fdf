@@ -6,7 +6,7 @@
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/20 17:54:41 by dkocob        #+#    #+#                 */
-/*   Updated: 2022/03/08 19:06:53 by dkocob        ########   odam.nl         */
+/*   Updated: 2022/03/10 17:43:56 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ void	render(struct s_data *d)
 {
 	map_rotate(d);
 	map_apply_z(d);
-	map_draw(d);
+	map_draw(0, d);
+	mlx_put_image_to_window(d->mlx, d->win, d->img.img, 0, 0);
 }
 
 int	window(struct s_data *d)
