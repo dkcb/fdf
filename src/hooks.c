@@ -6,7 +6,7 @@
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/20 17:54:41 by dkocob        #+#    #+#                 */
-/*   Updated: 2022/03/04 16:17:54 by dkocob        ########   odam.nl         */
+/*   Updated: 2022/03/12 20:00:17 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int	mouse_press(int press, int x, int y, struct s_data *d)
 	d->c.pr = 1;
 	d->c.px = x;
 	d->c.py = y;
+	press = 1;
 	return (0);
 }
 
@@ -61,6 +62,7 @@ int	mouse_release(int press, int x, int y, struct s_data *d)
 		render(d);
 	}
 	d->c.pr = 0;
+	press = 0;
 	return (0);
 }
 

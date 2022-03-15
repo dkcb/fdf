@@ -6,7 +6,7 @@
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/05/21 20:46:31 by dkocob        #+#    #+#                 */
-/*   Updated: 2022/03/10 17:55:40 by dkocob        ########   odam.nl         */
+/*   Updated: 2022/03/15 17:02:27 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	val(char *s)
 	while (s[i] && ft_isdigit(s[i]))
 		i++;
 	i--;
-	while (s[i] && ft_isdigit(s[i]))
+	while (i > -1 && s[i] && ft_isdigit(s[i]))
 	{
 		res = res + (s[i] - '0') * pwr;
 		pwr = pwr * 10;

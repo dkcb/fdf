@@ -6,7 +6,7 @@
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/21 19:00:06 by dkocob        #+#    #+#                 */
-/*   Updated: 2022/03/08 18:59:10 by dkocob        ########   odam.nl         */
+/*   Updated: 2022/03/15 17:29:07 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ void	assign_map_values(struct s_data *d)
 
 struct s_p	*vlist(struct s_data *d)
 {
-	d->vs = malloc(sizeof(struct s_p) * d->m.szx * d->m.szy);
+	d->vs = malloc(sizeof(struct s_p) * (d->m.szx * d->m.szy + 1));
 	if (!d->vs)
-		return (NULL);
+		exit (0);
 	d->m.cur = d->m.lhead;
 	while (d->i.i1 < d->m.szx * d->m.szy)
 	{
@@ -53,40 +53,56 @@ struct s_p	*vlist(struct s_data *d)
 	return (d->vs);
 }
 
-int	get_arg_stack(struct s_data *d, char **line)
+void	get_arg_stack(struct s_data *d)
 {
 	struct s_line	*new;
-
-	new = malloc(sizeof(new));
-	if (!line || !new || !line[0])
-		return (-1);
-	new->line = *line;
-	if (!d->m.lhead)
-	{
-		d->m.lhead = new;
-		d->m.cur = new;
-		return (1);
-	}
-	d->m.cur->next = new;
-	d->m.cur = d->m.cur->next;
-	return (0);
-}
-
-int	map_init(int fd, struct s_data *d)
-{
-	char	*line;
-	int		i;
+	struct s_line	*cur;
+	char			*line;
+	int				i;
 
 	i = 0;
-	while (get_next_line(fd, &line))
+	cur = malloc(sizeof(struct s_line));
+	if (!cur || d->m.fd < 1)
+		exit (0);
+	while (get_next_line(d->m.fd, &line))
 	{
-		get_arg_stack(d, &line);
+		cur->line = line;
+		if (i == 0)
+			d->m.lhead = cur;
+		new = malloc(sizeof(struct s_line));
+		if (!new || d->m.fd < 1)
+			exit (0);
+		cur->next = new;
+		cur = new;
 		i++;
 	}
+	new->next = NULL;
 	d->m.szy = i;
-	d->m.szx = c_cnt(d->m.lhead->line, ' ');
-	d->m.cur = d->m.lhead;
-	vlist(d);
+}
+
+size_t	c_cnt_fdf(char *s, char c)
+{
+	size_t	i;
+	size_t	i2;
+
 	i = 0;
-	return (1);
+	i2 = 0;
+	while (s[i])
+	{
+		if (s[i] == c)
+		{
+			i2++;
+			while (s[i] == c)
+				i++;
+		}
+		i++;
+	}
+	return (i2);
+}
+
+struct s_p	*map_init(struct s_data *d)
+{
+	get_arg_stack(d);
+	d->m.szx = c_cnt_fdf(d->m.lhead->line, ' ');
+	return (vlist(d));
 }

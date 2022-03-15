@@ -6,7 +6,7 @@
 #    By: dkocob <dkocob@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/08/25 13:57:19 by dkocob        #+#    #+#                  #
-#    Updated: 2022/03/08 19:04:56 by dkocob        ########   odam.nl          #
+#    Updated: 2022/03/15 16:53:03 by dkocob        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,8 +24,8 @@ SRCS			= main.c \
 				hooks.c
 NAME			= fdf
 OBJS			= $(patsubst %.c,obj/%.o,$(SRCS))
-LFLAGS			= -Lmlx -lmlx -framework OpenGL -framework AppKit -fsanitize=address -ofast
-CFLAGS			= -g#-Wall -Wextra #-Werror -g #-fsanitize=address
+LFLAGS			= -Lmlx -lmlx -framework OpenGL -framework AppKit -g -fsanitize=address -ofast
+CFLAGS			= -Wall -Wextra -Werror -g -fsanitize=address# 
 
 all:			$(NAME)
 
