@@ -6,7 +6,7 @@
 #    By: dkocob <dkocob@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/08/25 13:57:19 by dkocob        #+#    #+#                  #
-#    Updated: 2022/03/15 16:53:03 by dkocob        ########   odam.nl          #
+#    Updated: 2022/03/15 17:55:24 by dkocob        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,10 +33,8 @@ $(NAME):		$(OBJS)
 				$(CC) $(LFLAGS) $(OBJS) -o $(NAME)
 
 obj/%.o:		%.c
+				mkdir -p obj
 				$(CC) -c $(CFLAGS) -o $@ $<
-
-# obj/map.o:		src/map.c
-# 				$(CC) -c $(CFLAGS) -o obj/map.o src/map.c
 
 run:			$(NAME)
 				./$(NAME)
